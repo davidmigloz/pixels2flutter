@@ -24,9 +24,15 @@ dependencies:
   go_router: 12.1.1
   injectable: 2.3.2
   langchain:
-    path: ../langchain_dart/packages/langchain
+    git:
+      url: https://github.com/davidmigloz/langchain_dart
+      path: packages/langchain
+      ref: 1b38bff7eff10327cd0154c0a8d47bd363870e2d
   langchain_openai:
-    path: ../langchain_dart/packages/langchain_openai
+    git:
+      url: https://github.com/davidmigloz/langchain_dart
+      path: packages/langchain_openai
+      ref: 1b38bff7eff10327cd0154c0a8d47bd363870e2d
   flutter_markdown: 0.6.18+2
   result_dart: #1.1.0
     git:
@@ -45,11 +51,20 @@ dev_dependencies:
 
 dependency_overrides:
   langchain:
-    path: ../langchain_dart/packages/langchain
+    git:
+      url: https://github.com/davidmigloz/langchain_dart
+      path: packages/langchain
+      ref: 1b38bff7eff10327cd0154c0a8d47bd363870e2d
   langchain_openai:
-    path: ../langchain_dart/packages/langchain_openai
+    git:
+      url: https://github.com/davidmigloz/langchain_dart
+      path: packages/langchain_openai
+      ref: 1b38bff7eff10327cd0154c0a8d47bd363870e2d
   openai_dart:
-    path: ../langchain_dart/packages/openai_dart
+    git:
+      url: https://github.com/davidmigloz/langchain_dart
+      path: packages/openai_dart
+      ref: 1b38bff7eff10327cd0154c0a8d47bd363870e2d
 
 flutter:
   uses-material-design: true
