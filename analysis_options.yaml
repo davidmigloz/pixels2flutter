@@ -81,14 +81,12 @@ linter:
     - implementation_imports
     - implicit_call_tearoffs
     - invalid_case_patterns
-    - iterable_contains_unrelated_type
     - join_return_with_assignment
     - leading_newlines_in_multiline_strings
     - library_annotations
     - library_names
     - library_prefixes
     - library_private_types_in_public_api
-    - list_remove_unrelated_type
     - matching_super_parameters
     - missing_whitespace_between_adjacent_strings
     - no_adjacent_strings_in_list
@@ -142,7 +140,7 @@ linter:
     - prefer_typing_uninitialized_variables
     - prefer_void_to_null
     - provide_deprecation_message
-    - public_member_api_docs
+#    - public_member_api_docs
     - recursive_getters
     - require_trailing_commas
     - secure_pubspec_urls

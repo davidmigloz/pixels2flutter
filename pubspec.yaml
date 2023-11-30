@@ -1,5 +1,5 @@
 name: pixels2flutter
-description: Convert and screenshot to a working Flutter app screen.
+description: Convert a screenshot to a working Flutter app.
 version: 1.0.0+1
 publish_to: 'none'
 
@@ -10,10 +10,59 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  dotted_border: 2.1.0
+  equatable: 2.0.5
+  file_picker: 6.1.1
+  flutter_animate: 4.3.0
+  flutter_bloc: 8.1.3
+  flutter_secure_storage: 9.0.0
+  flutter_svg: 2.0.9
+  get_it: 7.6.4
+  github: 9.20.0
+  go_router: 12.1.1
+  injectable: 2.3.2
+  langchain:
+    path: ../langchain_dart/packages/langchain
+  langchain_openai:
+    path: ../langchain_dart/packages/langchain_openai
+  flutter_markdown: 0.6.18+2
+  result_dart: #1.1.0
+    git:
+      url: https://github.com/davidmigloz/result_dart.git
+      ref: 302262ddbba670bbe389e1072000b45bd21cfea3
+  super_drag_and_drop: 0.7.3
+  syntax_highlight: 0.2.0
+  url_launcher: 6.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_gen_runner: 5.3.2
+  injectable_generator: 2.4.1
+  build_runner: 2.4.6
+
+dependency_overrides:
+  langchain:
+    path: ../langchain_dart/packages/langchain
+  langchain_openai:
+    path: ../langchain_dart/packages/langchain_openai
+  openai_dart:
+    path: ../langchain_dart/packages/openai_dart
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
+
+flutter_gen:
+  output: lib/app/assets
+  integrations:
+    flutter_svg: true
+  assets:
+    enabled: true
+  fonts:
+    enabled: false
+  colors:
+    enabled: false
