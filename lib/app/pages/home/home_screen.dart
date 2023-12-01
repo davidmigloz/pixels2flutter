@@ -601,6 +601,7 @@ class _HowItWorks extends StatelessWidget {
                         constraints: const BoxConstraints(maxWidth: 680),
                         child: ListView.builder(
                           shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (final context, final index) {
                             return _HowItWorksItemWidget(
                               step: index + 1,
@@ -784,6 +785,7 @@ class _FAQs extends StatelessWidget {
                   const SizedBox(height: 16),
                   ListView.builder(
                     shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (final context, final index) {
                       return _FAQsItemWidget(item: _faqs[index]);
                     },
