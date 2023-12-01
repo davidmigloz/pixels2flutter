@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:pixels2flutter/app/navigation/transitions.dart';
 
 import '../pages/gist/gist_screen.dart';
 import '../pages/home/home_screen.dart';
@@ -22,8 +23,11 @@ class NavigationRoutes {
             name: 'gist',
             path: NavUrl.gist().subrouteFrom(NavUrl.home),
             parentNavigatorKey: rootNavigatorKey,
-            builder: (final _, final state) => GistScreen(
-              gistId: state.pathParameters['gistId'] ?? '',
+            pageBuilder: (final _, final state) => noTransitionPage(
+              state: state,
+              child: GistScreen(
+                gistId: state.pathParameters['gistId'] ?? '',
+              ),
             ),
           ),
         ],
