@@ -9,15 +9,15 @@
   <meta name="description" content="Effortlessly convert your UI screenshots into functional Flutter code with pixels2flutter.">
   <meta name="keywords" content="pixels2flutter, Flutter, convert screenshot to app, Flutter code generator, UI to code">
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="pixels2flutter">
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
@@ -39,20 +39,112 @@
     const serviceWorkerVersion = null;
   </script>
   <script src="flutter.js" defer></script>
+
+  <style>
+        body {
+            background: rgb(88,119,245);
+            background: radial-gradient(
+                circle at 50% -30%,
+                rgba(88,119,245,1),
+                rgba(2,51,121,1)
+            );
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .flutter-loader {
+            display: none;
+        }
+
+        #loading {
+            background: rgb(88,119,245);
+            background: radial-gradient(
+                circle at 50% -30%,
+                rgba(88,119,245,1),
+                rgba(2,51,121,1)
+            );
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            transition: opacity .4s ease;
+        }
+
+        #loading img {
+            animation: 1s ease-in-out 0s infinite alternate breathe;
+            transition: opacity .4s ease;
+        }
+
+        #loading.main_done img {
+            opacity: 1;
+        }
+
+        #loading.init_done img {
+            animation: .33s ease-in-out 0s 1 forwards zooooom;
+            opacity: .05;
+        }
+
+        #loading.run_app {
+            opacity: .05;
+        }
+
+        #loading.run_app img {
+            opacity: 0;
+        }
+
+        @keyframes breathe {
+            from {
+                transform: scale(1)
+            }
+            to {
+                transform: scale(0.95)
+            }
+        }
+
+        @keyframes zooooom {
+            from {
+                transform: scale(1)
+            }
+            to {
+                transform: scale(10)
+            }
+        }
+    </style>
+    <link rel="prefetch" href="/assets/assets/select_image.svg" />
 </head>
 <body>
+  <div id="loading">
+    <img src="/assets/assets/pixels2flutter.svg" alt="Loading..." width="230">
+  </div>
   <script>
-    window.addEventListener('load', function(ev) {
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
-        }
-      });
+    window.addEventListener('load', async function () {
+        const loading = document.querySelector('#loading');
+        const engineInitializer = await _flutter.loader.loadEntrypoint({
+          serviceWorker: { serviceWorkerVersion }
+        });
+        loading.classList.add('main_done');
+        const appRunner = await engineInitializer.initializeEngine();
+        loading.classList.add('init_done');
+        await appRunner.runApp();
+        setTimeout(() => {
+          loading.classList.add('run_app');
+          setTimeout(() => loading.remove(), 200);
+        }, 200);
     });
   </script>
 </body>

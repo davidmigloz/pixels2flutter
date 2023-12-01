@@ -108,7 +108,13 @@ class _Logo extends StatelessWidget {
               ),
             ),
           ),
-          Assets.pixels2flutter.svg(height: 230).animate().fade(),
+          Assets.pixels2flutter
+              .svg(height: 230)
+              .animate(delay: 500.ms) //
+              .fadeIn(
+                duration: 500.ms,
+                curve: Curves.easeIn,
+              ),
         ],
       ),
     );
@@ -252,7 +258,12 @@ class _AppCardBody extends StatelessWidget {
             ),
             child: cardContent,
           ),
-        ),
+        )
+            .animate(delay: 500.ms) //
+            .fadeIn(
+              duration: 500.ms,
+              curve: Curves.easeIn,
+            ),
       ),
     );
   }
