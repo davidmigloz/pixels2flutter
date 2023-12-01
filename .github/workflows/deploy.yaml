@@ -44,7 +44,7 @@ jobs:
         run: flutter pub get
 
       - name: Build
-        run: flutter build web --release
+        run: flutter build web --release --web-renderer=canvaskit
 
       - name: Setup Pages
         uses: actions/configure-pages@f156874f8191504dae5b037505266ed5dda6c382
