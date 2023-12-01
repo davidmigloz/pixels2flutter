@@ -399,9 +399,21 @@ class _S2AdditionalInstructionsState extends State<_S2AdditionalInstructions> {
                     buildWhen: (final previous, final current) => previous.generateImages != current.generateImages,
                     builder: (final context, final state) {
                       return CheckboxListTile(
-                        title: Text(
-                          'Generate images using OpenAI DALL·E',
-                          style: theme.textTheme.bodyMedium,
+                        title: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Generate images using OpenAI DALL·E',
+                              style: theme.textTheme.bodyMedium,
+                            ),
+                            const SizedBox(width: 8),
+                            const Tooltip(
+                              message: 'Enable this option if you want to replicate the images '
+                                  'in the screenshot using OpenAI DALL·E image generator.\n'
+                                  'Mind that this will increase the generation time and cost.',
+                              child: Icon(Icons.info_outline, size: 16),
+                            ),
+                          ],
                         ),
                         value: state.generateImages,
                         onChanged: (final value) {
@@ -505,7 +517,7 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
           builder: (final context, final state) {
             return CheckboxListTile(
               title: Text(
-                'Remember my keys for next time',
+                'Remember my keys for next time (securely stored in your browser)',
                 style: theme.textTheme.bodyMedium,
               ),
               value: state.storeApiKeys,
@@ -763,9 +775,9 @@ class _FAQs extends StatelessWidget {
     _FAQsItem(
       title: 'Can I use an open-source alternative to OpenAI?',
       content:
-      r'At the moment, [pixels2flutter.dev](https://pixels2flutter.dev) only supports OpenAI GPT-4V(ision) model. '
-      r'But as soon as [LangChain.dart](https://github.com/davidmigloz/langchain_dart) supports other alternatives, '
-      r'pixels2flutter will add support for them too.',
+          r'At the moment, [pixels2flutter.dev](https://pixels2flutter.dev) only supports OpenAI GPT-4V(ision) model. '
+          r'But as soon as [LangChain.dart](https://github.com/davidmigloz/langchain_dart) supports other alternatives, '
+          r'pixels2flutter will add support for them too.',
     ),
   ];
 
