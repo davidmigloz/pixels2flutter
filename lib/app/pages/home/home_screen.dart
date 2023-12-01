@@ -726,39 +726,32 @@ class _FAQs extends StatelessWidget {
       title: 'Is pixels2flutter.dev free?',
       content: 'Yes! [pixels2flutter.dev](https://pixels2flutter.dev) app is totally free.  \n'
           'But you need to provide your own OpenAI key to generate the code.  \n'
-          r'Every generation costs around $0.05 of OpenAI credits.',
+          r'Every generation costs between $0.01 and $0.1 of OpenAI credits (depending on the length of the code).',
     ),
     _FAQsItem(
       title: 'Is pixels2flutter.dev open-source?',
       content: 'Yes! [pixels2flutter.dev](https://pixels2flutter.dev) app is fully open-source. '
           'It is built using Flutter web and [LangChain.dart](https://github.com/davidmigloz/langchain_dart).  \n'
-          'You can find the code in [here](https://github.com/davidmigloz/pixels2flutter). '
-          "Don't forget to give it a star if you like it!",
-    ),
-    _FAQsItem(
-      title: 'Can I use an open-source alternative to OpenAI?',
-      content:
-          r'At the moment, [pixels2flutter.dev](https://pixels2flutter.dev) only supports OpenAI GPT-4V(ision) model. '
-          r'But as soon as [LangChain.dart](https://github.com/davidmigloz/langchain_dart) supports other alternatives, '
-          r'pixels2flutter will add support for them too.',
+          'You can find the code [here](https://github.com/davidmigloz/pixels2flutter). '
+          "Don't forget to drop a star if you like it!",
     ),
     _FAQsItem(
       title: 'Where can I get the OpenAI and GitHub API keys?',
-      content: '**OpenAI key:**  \n'
+      content: '**OpenAI key:** (required to generate the code) \n'
           '1. Log in or sign up to the [OpenAI platform](https://platform.openai.com/docs/overview).\n'
-          '2. Go to the [API keys page](https://beta.openai.com/account/api-keys).\n'
+          '2. Go to the [API keys](https://beta.openai.com/account/api-keys) page.\n'
           '3. Click on the "Create new API key" button.\n'
           '4. Copy the key.\n'
           '5. *Recommended*: go to [Usage page](https://platform.openai.com/usage) and set a monthly limit to avoid surprises.\n\n'
-          '**GitHub token:**  \n'
+          '**GitHub token:** (required to load the code into DartPad) \n'
           '1. Log in or sign up to [GitHub](https://github.com).\n'
-          '2. Go to the [Personal access tokens page](https://github.com/settings/tokens?type=beta).\n'
-          '3. Select Fine-grained personal access tokens.\n'
+          '2. Go to the [Personal access tokens](https://github.com/settings/tokens?type=beta) page.\n'
+          '3. Select "Fine-grained personal access tokens".\n'
           '4. Give it a name (e.g. pixels2flutter).\n'
           '5. Set the expiration date (e.g. 30 days).\n'
-          '6. Repository access: Public Repositories (read-only).\n'
-          '7. Permissions: select only Gists - Access: Read and Write.\n'
-          '8. Click generate and copy the token.\n',
+          '6. Repository access: "Public Repositories (read-only)".\n'
+          '7. Permissions: select only "Gists - Access: Read and Write".\n'
+          '8. Click "Generate" and copy the token.\n',
     ),
     _FAQsItem(
       title: "Isn't it risky to provide my API keys?",
@@ -766,6 +759,13 @@ class _FAQs extends StatelessWidget {
           'Yes, it is. But that is the only way we can offer [pixels2flutter.dev](https://pixels2flutter.dev) app for free. '
           'That is also why it is open-source. You can check the code and run it locally if you want to be 100% sure '
           'that your API keys are not being misused.',
+    ),
+    _FAQsItem(
+      title: 'Can I use an open-source alternative to OpenAI?',
+      content:
+      r'At the moment, [pixels2flutter.dev](https://pixels2flutter.dev) only supports OpenAI GPT-4V(ision) model. '
+      r'But as soon as [LangChain.dart](https://github.com/davidmigloz/langchain_dart) supports other alternatives, '
+      r'pixels2flutter will add support for them too.',
     ),
   ];
 
@@ -944,6 +944,7 @@ class _Footer extends StatelessWidget {
                   style: theme.textTheme.bodySmall?.copyWith(
                     fontStyle: FontStyle.italic,
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
