@@ -8,6 +8,8 @@ Convert a screenshot to Flutter code!
 
 ## How does it work
 
+https://github.com/davidmigloz/pixels2flutter/assets/6546265/a6e4101c-98eb-4adf-b0b9-ae37af3f2ccc
+
 **1. Upload a screenshot**
 
 Select or drag and drop a screenshot of the UI you want to convert to Flutter.
