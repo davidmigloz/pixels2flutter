@@ -31,7 +31,7 @@ import '../../domain/use_cases/update_openai_key.dart' as _i15;
 import '../navigation/navigation_routes.dart' as _i9;
 import '../navigation/router.dart' as _i11;
 import '../pages/gist/bloc/gist_screen_cubit.dart' as _i23;
-import '../pages/home/bloc/home_screen_cubit.dart' as _i21;
+import '../pages/home/bloc/home_page_cubit.dart' as _i21;
 import 'injection.dart' as _i24;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -72,7 +72,7 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i18.GetGitHubKeyUseCase>(() => _i18.GetGitHubKeyUseCase(gh<_i14.SettingsRepository>()));
     gh.factory<_i19.GetOpenAiKeyUseCase>(() => _i19.GetOpenAiKeyUseCase(gh<_i14.SettingsRepository>()));
     gh.singleton<_i20.GoRouter>(injectionModule.goRouter(gh<_i11.RouterFactory>()));
-    gh.factory<_i21.HomeScreenCubit>(() => _i21.HomeScreenCubit(
+    gh.factory<_i21.HomePageCubit>(() => _i21.HomePageCubit(
           gh<_i4.FilePicker>(),
           gh<_i22.GetOpenAiKeyUseCase>(),
           gh<_i22.GetGitHubKeyUseCase>(),

@@ -1,9 +1,9 @@
-part of 'home_screen_cubit.dart';
+part of 'home_page_cubit.dart';
 
 @immutable
-class HomeScreenState extends Equatable {
-  const HomeScreenState({
-    this.status = HomeScreenStatus.loading,
+class HomePageState extends Equatable {
+  const HomePageState({
+    this.status = HomePageStatus.loading,
     this.imageBytes,
     this.additionalInstructions,
     this.generateImages = false,
@@ -12,9 +12,10 @@ class HomeScreenState extends Equatable {
     this.githubKey,
     this.generatedCode,
     this.generateCodeError,
+    this.selectedExample = 0,
   });
 
-  final HomeScreenStatus status;
+  final HomePageStatus status;
   final Uint8List? imageBytes;
   final String? additionalInstructions;
   final bool generateImages;
@@ -23,9 +24,10 @@ class HomeScreenState extends Equatable {
   final String? githubKey;
   final String? generatedCode;
   final Object? generateCodeError;
+  final int selectedExample;
 
-  HomeScreenState copyWith({
-    final HomeScreenStatus? status,
+  HomePageState copyWith({
+    final HomePageStatus? status,
     final Uint8List? imageBytes,
     final String? additionalInstructions,
     final bool? generateImages,
@@ -34,8 +36,9 @@ class HomeScreenState extends Equatable {
     final String? githubKey,
     final String? generatedCode,
     final Object? generateCodeError,
+    final int? selectedExample,
   }) {
-    return HomeScreenState(
+    return HomePageState(
       status: status ?? this.status,
       imageBytes: imageBytes ?? this.imageBytes,
       additionalInstructions: additionalInstructions ?? this.additionalInstructions,
@@ -45,12 +48,13 @@ class HomeScreenState extends Equatable {
       githubKey: githubKey ?? this.githubKey,
       generatedCode: generatedCode ?? this.generatedCode,
       generateCodeError: generateCodeError,
+      selectedExample: selectedExample ?? this.selectedExample,
     );
   }
 
-  HomeScreenState reset() {
-    return HomeScreenState(
-      status: HomeScreenStatus.s1SelectImage,
+  HomePageState reset() {
+    return HomePageState(
+      status: HomePageStatus.s1SelectImage,
       openAiKey: openAiKey,
       githubKey: githubKey,
     );
@@ -67,10 +71,11 @@ class HomeScreenState extends Equatable {
         githubKey,
         generatedCode,
         generateCodeError,
+        selectedExample,
       ];
 }
 
-enum HomeScreenStatus {
+enum HomePageStatus {
   loading,
   s1SelectImage,
   s2AdditionalInstructions,

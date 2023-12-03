@@ -6,8 +6,7 @@ import '../../data/dart.dart';
 import 'use_case.dart';
 
 @injectable
-class UpdateOpenAiKeyUseCase
-    implements AsyncUseCase<UpdateOpenAIKeyUseCaseParams, Unit, Exception> {
+class UpdateOpenAiKeyUseCase implements AsyncUseCase<UpdateOpenAIKeyUseCaseParams, Unit, Exception> {
   const UpdateOpenAiKeyUseCase(
     this._chatOpenAI,
     this._dallETool,

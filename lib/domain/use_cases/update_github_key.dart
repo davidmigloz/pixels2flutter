@@ -6,8 +6,7 @@ import '../../data/dart.dart';
 import 'use_case.dart';
 
 @injectable
-class UpdateGitHubKeyUseCase
-    implements AsyncUseCase<UpdateGitHubKeyUseCaseParams, Unit, Exception> {
+class UpdateGitHubKeyUseCase implements AsyncUseCase<UpdateGitHubKeyUseCaseParams, Unit, Exception> {
   const UpdateGitHubKeyUseCase(
     this._github,
     this._settingsRepository,

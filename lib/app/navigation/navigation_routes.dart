@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:pixels2flutter/app/navigation/transitions.dart';
 
 import '../pages/gist/gist_screen.dart';
-import '../pages/home/home_screen.dart';
+import '../pages/home/home_page.dart';
 import 'navigation_urls.dart';
 
 @injectable
@@ -17,7 +17,7 @@ class NavigationRoutes {
         name: 'home',
         path: NavUrl.home,
         parentNavigatorKey: rootNavigatorKey,
-        builder: (final _, final __) => const HomeScreen(),
+        builder: (final _, final __) => const HomePage(),
         routes: [
           GoRoute(
             name: 'gist',

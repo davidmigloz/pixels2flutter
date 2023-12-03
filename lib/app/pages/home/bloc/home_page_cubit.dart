@@ -11,11 +11,11 @@ import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 import '../../../../domain/domain.dart';
 import '../../../navigation/navigation_urls.dart';
 
-part 'home_screen_state.dart';
+part 'home_page_state.dart';
 
 @injectable
-class HomeScreenCubit extends Cubit<HomeScreenState> {
-  HomeScreenCubit(
+class HomePageCubit extends Cubit<HomePageState> {
+  HomePageCubit(
     this._filePicker,
     this._getOpenAiKeyUseCase,
     this._getGitHubKeyUseCase,
@@ -25,7 +25,7 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
     this._replaceImagePlaceholdersUseCase,
     this._createGistUseCase,
     this._router,
-  ) : super(const HomeScreenState()) {
+  ) : super(const HomePageState()) {
     unawaited(_loadKeys());
   }
 
@@ -42,14 +42,14 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   StreamSubscription<dynamic>? _generateCodeSubscription;
 
   Future<void> _loadKeys() async {
-    if (state.status != HomeScreenStatus.loading) {
+    if (state.status != HomePageStatus.loading) {
       return;
     }
     final openAiKey = (await _getOpenAiKeyUseCase()).getOrNull();
     final githubKey = (await _getGitHubKeyUseCase()).getOrNull();
     emit(
       state.copyWith(
-        status: HomeScreenStatus.s1SelectImage,
+        status: HomePageStatus.s1SelectImage,
         openAiKey: openAiKey,
         githubKey: githubKey,
         storeApiKeys: openAiKey?.isNotEmpty,
@@ -59,11 +59,11 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
 
   void onBackButtonPressed() {
     final currentStatus = state.status;
-    if (currentStatus.index <= HomeScreenStatus.s1SelectImage.index) {
+    if (currentStatus.index <= HomePageStatus.s1SelectImage.index) {
       return;
     }
 
-    final newStatus = HomeScreenStatus.values[currentStatus.index - 1];
+    final newStatus = HomePageStatus.values[currentStatus.index - 1];
     emit(state.copyWith(status: newStatus));
   }
 
@@ -104,7 +104,7 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   void _onImageLoaded(final Uint8List image) {
     emit(
       state.copyWith(
-        status: HomeScreenStatus.s2AdditionalInstructions,
+        status: HomePageStatus.s2AdditionalInstructions,
         imageBytes: image,
       ),
     );
@@ -119,7 +119,7 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
   }
 
   void onAdditionalInstructionsSubmitted() {
-    emit(state.copyWith(status: HomeScreenStatus.s3ApiKeys));
+    emit(state.copyWith(status: HomePageStatus.s3ApiKeys));
   }
 
   void onOpenAiKeyChanged(final String openAiKey) {
@@ -154,7 +154,7 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
         storeApiKeys: storeApiKeys,
       ),
     );
-    emit(state.copyWith(status: HomeScreenStatus.s4Generating));
+    emit(state.copyWith(status: HomePageStatus.s4Generating));
     unawaited(_generateCode());
   }
 
@@ -221,6 +221,10 @@ class HomeScreenCubit extends Cubit<HomeScreenState> {
 
   Future<void> _onGenerateCodeError(final Object error) async {
     emit(state.reset().copyWith(generateCodeError: error));
+  }
+
+  void onExampleSelected(final int example) {
+    emit(state.copyWith(selectedExample: example));
   }
 
   @override
