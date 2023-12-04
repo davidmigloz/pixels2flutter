@@ -11,7 +11,7 @@ class HomePageState extends Equatable {
     this.openAiKey,
     this.githubKey,
     this.generatedCode,
-    this.generateCodeError,
+    this.error,
     this.selectedExample = 0,
   });
 
@@ -23,7 +23,7 @@ class HomePageState extends Equatable {
   final String? openAiKey;
   final String? githubKey;
   final String? generatedCode;
-  final Object? generateCodeError;
+  final HomePageError? error;
   final int selectedExample;
 
   HomePageState copyWith({
@@ -35,7 +35,7 @@ class HomePageState extends Equatable {
     final String? openAiKey,
     final String? githubKey,
     final String? generatedCode,
-    final Object? generateCodeError,
+    final HomePageError? error,
     final int? selectedExample,
   }) {
     return HomePageState(
@@ -47,7 +47,7 @@ class HomePageState extends Equatable {
       openAiKey: openAiKey ?? this.openAiKey,
       githubKey: githubKey ?? this.githubKey,
       generatedCode: generatedCode ?? this.generatedCode,
-      generateCodeError: generateCodeError,
+      error: error,
       selectedExample: selectedExample ?? this.selectedExample,
     );
   }
@@ -55,8 +55,10 @@ class HomePageState extends Equatable {
   HomePageState reset() {
     return HomePageState(
       status: HomePageStatus.s1SelectImage,
+      storeApiKeys: storeApiKeys,
       openAiKey: openAiKey,
       githubKey: githubKey,
+      selectedExample: selectedExample,
     );
   }
 
@@ -70,7 +72,7 @@ class HomePageState extends Equatable {
         openAiKey,
         githubKey,
         generatedCode,
-        generateCodeError,
+        error,
         selectedExample,
       ];
 }
@@ -81,4 +83,10 @@ enum HomePageStatus {
   s2AdditionalInstructions,
   s3ApiKeys,
   s4Generating,
+}
+
+enum HomePageError {
+  invalidOpenAiApiKey,
+  noAccessToGpt4V,
+  unknown,
 }

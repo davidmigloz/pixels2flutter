@@ -35,11 +35,11 @@ class _Scaffold extends StatelessWidget {
           body: _Body(),
         ),
       ),
-      listenWhen: (final previous, final current) => previous.generateCodeError != current.generateCodeError,
+      listenWhen: (final previous, final current) => previous.error != current.error,
       listener: (final context, final state) {
-        if (state.generateCodeError != null) {
+        if (state.error == HomePageError.unknown) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Error generating code. Please try again.')),
+            const SnackBar(content: Text('Something went wrong… please try again.')),
           );
         }
       },

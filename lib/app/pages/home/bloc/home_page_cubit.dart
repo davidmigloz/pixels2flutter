@@ -171,11 +171,10 @@ class HomePageCubit extends Cubit<HomePageState> {
       (final res) {
         res.fold(
           _onGenerateCodeDelta,
-          _onGenerateCodeError,
+          _onGenerateCodeFailure,
         );
       },
       onDone: () => _onGenerateCodeCompleted(state.generatedCode!),
-      onError: _onGenerateCodeError,
     );
   }
 
@@ -185,6 +184,17 @@ class HomePageCubit extends Cubit<HomePageState> {
         generatedCode: (state.generatedCode ?? '') + delta,
       ),
     );
+  }
+
+  Future<void> _onGenerateCodeFailure(final GenerateCodeFromImageFailure failure) async {
+    switch (failure) {
+      case GenerateCodeFromImageFailure.invalidApiKey:
+        emit(state.copyWith(status: HomePageStatus.s3ApiKeys, error: HomePageError.invalidOpenAiApiKey));
+      case GenerateCodeFromImageFailure.noAccessToGpt4V:
+        emit(state.copyWith(status: HomePageStatus.s3ApiKeys, error: HomePageError.noAccessToGpt4V));
+      case GenerateCodeFromImageFailure.unknown:
+        emit(state.reset().copyWith(status: HomePageStatus.s1SelectImage, error: HomePageError.unknown));
+    }
   }
 
   Future<void> _onGenerateCodeCompleted(final String generatedCode) async {
@@ -210,7 +220,7 @@ class HomePageCubit extends Cubit<HomePageState> {
     );
     await res.fold(
       _onGistCreated,
-      _onGenerateCodeError,
+      _onErrorCreatingGist,
     );
   }
 
@@ -219,8 +229,8 @@ class HomePageCubit extends Cubit<HomePageState> {
     await _router.push(NavUrl.gist(gistId: gistId));
   }
 
-  Future<void> _onGenerateCodeError(final Object error) async {
-    emit(state.reset().copyWith(generateCodeError: error));
+  Future<void> _onErrorCreatingGist(final Exception e) async {
+    emit(state.reset().copyWith(status: HomePageStatus.s1SelectImage, error: HomePageError.unknown));
   }
 
   void onExampleSelected(final int example) {

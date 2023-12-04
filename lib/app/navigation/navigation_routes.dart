@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
-import 'package:pixels2flutter/app/navigation/transitions.dart';
 
 import '../pages/gist/gist_screen.dart';
 import '../pages/home/home_page.dart';
 import 'navigation_urls.dart';
+import 'transitions.dart';
 
 @injectable
 class NavigationRoutes {

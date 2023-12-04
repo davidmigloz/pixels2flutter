@@ -17,6 +17,9 @@ class AppTheme {
       splashColor: const Color(0x57F8F2FF),
       highlightColor: const Color(0x57F8F2FF),
       hoverColor: const Color(0x57F8F2FF),
+      inputDecorationTheme: baseTheme.inputDecorationTheme.copyWith(
+        errorMaxLines: 3,
+      ),
       chipTheme: baseTheme.chipTheme.copyWith(
         shape: const _MaterialStateOutlinedBorder(),
         surfaceTintColor: Colors.transparent,

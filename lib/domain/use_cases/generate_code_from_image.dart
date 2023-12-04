@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -9,13 +10,14 @@ import 'package:result_dart/result_dart.dart';
 import 'use_case.dart';
 
 @injectable
-class GenerateCodeFromImageUseCase implements StreamUseCase<GenerateCodeFromImageUseCaseParams, String, Exception> {
+class GenerateCodeFromImageUseCase
+    implements StreamUseCase<GenerateCodeFromImageUseCaseParams, String, GenerateCodeFromImageFailure> {
   const GenerateCodeFromImageUseCase(this._chatOpenAI);
 
   final ChatOpenAI _chatOpenAI;
 
   @override
-  Stream<Result<String, Exception>> call({
+  Stream<Result<String, GenerateCodeFromImageFailure>> call({
     required final GenerateCodeFromImageUseCaseParams params,
   }) async* {
     try {
@@ -46,14 +48,43 @@ class GenerateCodeFromImageUseCase implements StreamUseCase<GenerateCodeFromImag
 
       final stream = chain.stream(prompt);
 
-      yield* stream.map(Result.success);
+      yield* stream.transform(
+        // Wrap the result into a Result class and map errors
+        StreamTransformer((final input, final cancelOnError) {
+          final controller = StreamController<Result<String, GenerateCodeFromImageFailure>>(sync: true);
+          controller.onListen = () {
+            final subscription = input.listen(
+              (final String data) => controller.add(Result.success(data)),
+              onError: (final Object error) => controller.add(Result.failure(_mapErrorToFailure(error))),
+              onDone: controller.close,
+              cancelOnError: cancelOnError,
+            );
+            controller
+              ..onPause = subscription.pause
+              ..onResume = subscription.resume
+              ..onCancel = subscription.cancel;
+          };
+          return controller.stream.listen(null);
+        }),
+      );
     } on Exception catch (e) {
-      yield Result.failure(e);
+      yield Result.failure(_mapErrorToFailure(e));
     }
   }
 
   String _convertImageToBase64(final Uint8List image) {
     return 'data:image/jpeg;base64,${base64Encode(image)}';
+  }
+
+  GenerateCodeFromImageFailure _mapErrorToFailure(final Object e) {
+    if (e is OpenAIClientException) {
+      if (e.body?.toString().contains('invalid_api_key') ?? false) {
+        return GenerateCodeFromImageFailure.invalidApiKey;
+      } else if (e.body?.toString().contains('model_not_found') ?? false) {
+        return GenerateCodeFromImageFailure.noAccessToGpt4V;
+      }
+    }
+    return GenerateCodeFromImageFailure.unknown;
   }
 }
 
@@ -65,6 +96,12 @@ class GenerateCodeFromImageUseCaseParams {
 
   final Uint8List image;
   final String? additionalInstructions;
+}
+
+enum GenerateCodeFromImageFailure {
+  invalidApiKey,
+  noAccessToGpt4V,
+  unknown,
 }
 
 const _systemPrompt = '''

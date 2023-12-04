@@ -378,16 +378,30 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
             'Check the FAQs below to learn how to get them.',
           ),
           const SizedBox(height: 24),
-          TextField(
-            controller: _openAIController,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              label: Text('OpenAI API key'),
-              helperText: 'Your OpenAI account should be at least "Usage tier 1" to use the GPT-4V(ision) model.',
-            ),
-            onChanged: cubit.onOpenAiKeyChanged,
-            keyboardType: TextInputType.text,
-            obscureText: true,
+          BlocBuilder<HomePageCubit, HomePageState>(
+            buildWhen: (final previous, final current) => previous.error != current.error,
+            builder: (final context, final state) {
+              return TextField(
+                controller: _openAIController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  label: const Text('OpenAI API key'),
+                  helperText: 'Your OpenAI account should be at least "Usage tier 1" to use the GPT-4V(ision) model.',
+                  errorText: switch (state.error) {
+                    HomePageError.invalidOpenAiApiKey => 'Invalid OpenAI API key. '
+                        'Please generate a valid key at platform.openai.com/api-keys.',
+                    HomePageError.noAccessToGpt4V =>
+                      'Your OpenAI account does not have access to the GPT-4V(ision) model. '
+                          'Please upgrade your account to "Usage tier 1" at platform.openai.com/account/billing '
+                          '(check the FAQs below for more info).',
+                    _ => null,
+                  },
+                ),
+                onChanged: cubit.onOpenAiKeyChanged,
+                keyboardType: TextInputType.text,
+                obscureText: true,
+              );
+            },
           ),
           const SizedBox(height: 24),
           TextField(
