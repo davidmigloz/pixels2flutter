@@ -20,6 +20,14 @@ class HomePageFAQsSection extends StatelessWidget {
           "Don't forget to drop a star if you like it!",
     ),
     _FAQsItem(
+      title: 'What can I expect from it?',
+      content: 'Like any other generative-AI tool, the generated code may not be perfect. '
+          'This tool is not meant to replace developers, but to support and empower them. '
+          'Use the generated code as a starting point, review it carefully, and make the necessary adjustments. '
+          'If the generated code is not good enough, try to provide more context in the "Additional instructions" field '
+          '(e.g. use widget X to implement Y, do Z when the user taps on the button, etc.).',
+    ),
+    _FAQsItem(
       title: 'Where can I get the OpenAI and GitHub API keys?',
       content: '**OpenAI key:** (required to generate the code) \n'
           '1. Log in or sign up to the [OpenAI platform](https://platform.openai.com/docs/overview).\n'

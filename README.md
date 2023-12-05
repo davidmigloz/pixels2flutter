@@ -61,6 +61,7 @@ So you can run the resulting Flutter app right from the browser!
 This project is inspired by:
 - [tldraw/make-real](https://github.com/tldraw/make-real)
 - [abi/screenshot-to-code](https://github.com/abi/screenshot-to-code)
+- [emilwallner/screenshot-to-code](https://github.com/emilwallner/screenshot-to-code)
 
 ## License
 
