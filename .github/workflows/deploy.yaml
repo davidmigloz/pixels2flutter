@@ -47,7 +47,7 @@ jobs:
         run: flutter build web --release --web-renderer=canvaskit
 
       - name: Setup Pages
-        uses: actions/configure-pages@f156874f8191504dae5b037505266ed5dda6c382
+        uses: actions/configure-pages@1f0c5cde4bc74cd7e1254d0cb4de8d49e9068c7d
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@a753861a5debcf57bf8b404356158c8e1e33150c
@@ -56,4 +56,4 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@de14547edc9944350dc0481aa5b7afb08e75f254
+        uses: actions/deploy-pages@13b55b33dd8996121833dbc1db458c793a334630
