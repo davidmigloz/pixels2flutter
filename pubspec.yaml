@@ -39,7 +39,7 @@ dev_dependencies:
     sdk: flutter
   flutter_gen_runner: 5.3.2
   injectable_generator: 2.4.1
-  build_runner: 2.4.6
+  build_runner: 2.4.7
 
 flutter:
   uses-material-design: true
