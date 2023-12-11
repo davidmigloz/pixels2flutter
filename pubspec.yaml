@@ -21,7 +21,7 @@ dependencies:
   flutter_svg: 2.0.9
   get_it: 7.6.4
   github: 9.20.0
-  go_router: 12.1.1
+  go_router: 12.1.3
   injectable: 2.3.2
   langchain: 0.2.0
   langchain_openai: 0.2.0
