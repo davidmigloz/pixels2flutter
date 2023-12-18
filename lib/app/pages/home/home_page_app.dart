@@ -248,7 +248,7 @@ class _S2AdditionalInstructionsState extends State<_S2AdditionalInstructions> {
   Widget build(final BuildContext context) {
     final theme = Theme.of(context);
     final cubit = context.read<HomePageCubit>();
-    final imageBytes = cubit.state.imageBytes!;
+    final imageBytes = cubit.state.screenshot!.data;
     return _AppCardBody(
       title: 'Additional instructions',
       hasBackButton: true,

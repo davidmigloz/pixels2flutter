@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart';
 import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 
 import '../../../../domain/domain.dart';
+import '../../../../domain/entities/entities.dart';
 import '../../../navigation/navigation_urls.dart';
 
 part 'home_page_state.dart';
@@ -74,8 +75,15 @@ class HomePageCubit extends Cubit<HomePageState> {
       return;
     }
 
-    final image = res.files.first.bytes!;
-    _onImageLoaded(image);
+    final file = res.files.first;
+    final mimeType = file.extension?.toLowerCase() == 'png' ? 'image/png' : 'image/jpeg';
+    final imageBytes = file.bytes!;
+    _onScreenshotLoaded(
+      Screenshot(
+        mimeType: mimeType,
+        data: imageBytes,
+      ),
+    );
   }
 
   Future<void> onFileDropped(final PerformDropEvent event) async {
@@ -96,16 +104,21 @@ class HomePageCubit extends Cubit<HomePageState> {
     }
 
     reader.getFile(format, (final file) async {
-      final image = await file.readAll();
-      _onImageLoaded(image);
+      final imageBytes = await file.readAll();
+      _onScreenshotLoaded(
+        Screenshot(
+          mimeType: format.mimeTypes!.first,
+          data: imageBytes,
+        ),
+      );
     });
   }
 
-  void _onImageLoaded(final Uint8List image) {
+  void _onScreenshotLoaded(final Screenshot screenshot) {
     emit(
       state.copyWith(
         status: HomePageStatus.s2AdditionalInstructions,
-        imageBytes: image,
+        screenshot: screenshot,
       ),
     );
   }
@@ -161,7 +174,7 @@ class HomePageCubit extends Cubit<HomePageState> {
   Future<void> _generateCode() async {
     final stream = _generateCodeFromImageUseCase(
       params: GenerateCodeFromImageUseCaseParams(
-        image: state.imageBytes!,
+        screenshot: state.screenshot!,
         additionalInstructions:
             (state.additionalInstructions?.isNotEmpty ?? false) ? state.additionalInstructions : null,
       ),

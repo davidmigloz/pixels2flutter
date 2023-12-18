@@ -4,7 +4,7 @@ part of 'home_page_cubit.dart';
 class HomePageState extends Equatable {
   const HomePageState({
     this.status = HomePageStatus.loading,
-    this.imageBytes,
+    this.screenshot,
     this.additionalInstructions,
     this.generateImages = false,
     this.storeApiKeys = false,
@@ -16,7 +16,7 @@ class HomePageState extends Equatable {
   });
 
   final HomePageStatus status;
-  final Uint8List? imageBytes;
+  final Screenshot? screenshot;
   final String? additionalInstructions;
   final bool generateImages;
   final bool storeApiKeys;
@@ -28,7 +28,7 @@ class HomePageState extends Equatable {
 
   HomePageState copyWith({
     final HomePageStatus? status,
-    final Uint8List? imageBytes,
+    final Screenshot? screenshot,
     final String? additionalInstructions,
     final bool? generateImages,
     final bool? storeApiKeys,
@@ -40,7 +40,7 @@ class HomePageState extends Equatable {
   }) {
     return HomePageState(
       status: status ?? this.status,
-      imageBytes: imageBytes ?? this.imageBytes,
+      screenshot: screenshot ?? this.screenshot,
       additionalInstructions: additionalInstructions ?? this.additionalInstructions,
       generateImages: generateImages ?? this.generateImages,
       storeApiKeys: storeApiKeys ?? this.storeApiKeys,
@@ -65,7 +65,7 @@ class HomePageState extends Equatable {
   @override
   List<Object?> get props => [
         status,
-        imageBytes,
+        screenshot,
         additionalInstructions,
         generateImages,
         storeApiKeys,

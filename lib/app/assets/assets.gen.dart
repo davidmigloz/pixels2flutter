@@ -14,15 +14,23 @@ import 'package:flutter/services.dart';
 class Assets {
   Assets._();
 
-  static const AssetGenImage examplePingPong = AssetGenImage('assets/example_ping_pong.png');
-  static const AssetGenImage examplePingpongGenerated = AssetGenImage('assets/example_pingpong_generated.gif');
-  static const AssetGenImage exampleWireframe = AssetGenImage('assets/example_wireframe.png');
-  static const AssetGenImage exampleWireframeGenerated = AssetGenImage('assets/example_wireframe_generated.gif');
-  static const AssetGenImage exampleYoutube = AssetGenImage('assets/example_youtube.png');
-  static const AssetGenImage exampleYoutubeGenerated = AssetGenImage('assets/example_youtube_generated.gif');
+  static const AssetGenImage examplePingPong =
+      AssetGenImage('assets/example_ping_pong.png');
+  static const AssetGenImage examplePingpongGenerated =
+      AssetGenImage('assets/example_pingpong_generated.gif');
+  static const AssetGenImage exampleWireframe =
+      AssetGenImage('assets/example_wireframe.png');
+  static const AssetGenImage exampleWireframeGenerated =
+      AssetGenImage('assets/example_wireframe_generated.gif');
+  static const AssetGenImage exampleYoutube =
+      AssetGenImage('assets/example_youtube.png');
+  static const AssetGenImage exampleYoutubeGenerated =
+      AssetGenImage('assets/example_youtube_generated.gif');
   static const SvgGenImage github = SvgGenImage('assets/github.svg');
   static const SvgGenImage howItWorks = SvgGenImage('assets/how_it_works.svg');
-  static const SvgGenImage pixels2flutter = SvgGenImage('assets/pixels2flutter.svg');
+  static const SvgGenImage pixels2flutter =
+      SvgGenImage('assets/pixels2flutter.svg');
+  static const String pixels2flutterVideo = 'assets/pixels2flutter_video.mp4';
   static const SvgGenImage selectImage = SvgGenImage('assets/select_image.svg');
 
   /// List of all assets
@@ -36,6 +44,7 @@ class Assets {
         github,
         howItWorks,
         pixels2flutter,
+        pixels2flutterVideo,
         selectImage
       ];
 }

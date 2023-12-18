@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:injectable/injectable.dart';
 import 'package:langchain/langchain.dart';
 import 'package:langchain_openai/langchain_openai.dart';
 import 'package:result_dart/result_dart.dart';
 
+import '../entities/entities.dart';
 import 'use_case.dart';
 
 @injectable
@@ -30,14 +30,15 @@ class GenerateCodeFromImageUseCase
       );
       final chain = chatModel.pipe(const StringOutputParser());
 
-      final imageBase64 = _convertImageToBase64(params.image);
+      final dataBase64 = base64Encode(params.screenshot.data);
       final additionalInstructions = params.additionalInstructions;
       final prompt = PromptValue.chat([
         ChatMessage.system(_systemPrompt),
         ChatMessage.human(
           ChatMessageContent.multiModal([
             ChatMessageContent.image(
-              url: imageBase64,
+              mimeType: params.screenshot.mimeType,
+              data: dataBase64,
               imageDetail: ChatMessageContentImageDetail.high,
             ),
             if (additionalInstructions != null) ChatMessageContent.text(additionalInstructions),
@@ -72,10 +73,6 @@ class GenerateCodeFromImageUseCase
     }
   }
 
-  String _convertImageToBase64(final Uint8List image) {
-    return 'data:image/jpeg;base64,${base64Encode(image)}';
-  }
-
   GenerateCodeFromImageFailure _mapErrorToFailure(final Object e) {
     if (e is OpenAIClientException) {
       if (e.body?.toString().contains('invalid_api_key') ?? false) {
@@ -90,11 +87,11 @@ class GenerateCodeFromImageUseCase
 
 class GenerateCodeFromImageUseCaseParams {
   const GenerateCodeFromImageUseCaseParams({
-    required this.image,
+    required this.screenshot,
     this.additionalInstructions,
   });
 
-  final Uint8List image;
+  final Screenshot screenshot;
   final String? additionalInstructions;
 }
 

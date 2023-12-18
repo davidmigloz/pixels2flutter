@@ -48,16 +48,20 @@ extension GetItInjectableX on _i1.GetIt {
     final injectionModule = _$InjectionModule();
     gh.singleton<_i3.ChatOpenAI>(injectionModule.chatOpenAI);
     gh.factory<_i4.FilePicker>(() => injectionModule.filePicker);
-    gh.factory<_i5.FlutterSecureStorage>(() => injectionModule.sharedPreference);
-    gh.factory<_i6.GenerateCodeFromImageUseCase>(() => _i6.GenerateCodeFromImageUseCase(gh<_i3.ChatOpenAI>()));
+    gh.factory<_i5.FlutterSecureStorage>(
+        () => injectionModule.sharedPreference);
+    gh.factory<_i6.GenerateCodeFromImageUseCase>(
+        () => _i6.GenerateCodeFromImageUseCase(gh<_i3.ChatOpenAI>()));
     gh.singleton<_i7.GitHub>(injectionModule.gitHub);
     gh.singletonAsync<_i8.Highlighter>(() => injectionModule.highlighter);
     gh.factory<_i9.NavigationRoutes>(() => _i9.NavigationRoutes());
     gh.singleton<_i3.OpenAIDallETool>(injectionModule.dallETool);
     gh.factory<_i10.ReplaceImagePlaceholdersUseCase>(
         () => _i10.ReplaceImagePlaceholdersUseCase(gh<_i3.OpenAIDallETool>()));
-    gh.factory<_i11.RouterFactory>(() => _i11.RouterFactory(gh<_i9.NavigationRoutes>()));
-    gh.singleton<_i12.SettingsRepository>(_i12.SettingsRepository(gh<_i5.FlutterSecureStorage>()));
+    gh.factory<_i11.RouterFactory>(
+        () => _i11.RouterFactory(gh<_i9.NavigationRoutes>()));
+    gh.singleton<_i12.SettingsRepository>(
+        _i12.SettingsRepository(gh<_i5.FlutterSecureStorage>()));
     gh.factory<_i13.UpdateGitHubKeyUseCase>(() => _i13.UpdateGitHubKeyUseCase(
           gh<_i7.GitHub>(),
           gh<_i14.SettingsRepository>(),
@@ -67,11 +71,16 @@ extension GetItInjectableX on _i1.GetIt {
           gh<_i3.OpenAIDallETool>(),
           gh<_i14.SettingsRepository>(),
         ));
-    gh.factory<_i16.CreateGistUseCase>(() => _i16.CreateGistUseCase(gh<_i7.GitHub>()));
-    gh.factory<_i17.DeleteGistUseCase>(() => _i17.DeleteGistUseCase(gh<_i7.GitHub>()));
-    gh.factory<_i18.GetGitHubKeyUseCase>(() => _i18.GetGitHubKeyUseCase(gh<_i14.SettingsRepository>()));
-    gh.factory<_i19.GetOpenAiKeyUseCase>(() => _i19.GetOpenAiKeyUseCase(gh<_i14.SettingsRepository>()));
-    gh.singleton<_i20.GoRouter>(injectionModule.goRouter(gh<_i11.RouterFactory>()));
+    gh.factory<_i16.CreateGistUseCase>(
+        () => _i16.CreateGistUseCase(gh<_i7.GitHub>()));
+    gh.factory<_i17.DeleteGistUseCase>(
+        () => _i17.DeleteGistUseCase(gh<_i7.GitHub>()));
+    gh.factory<_i18.GetGitHubKeyUseCase>(
+        () => _i18.GetGitHubKeyUseCase(gh<_i14.SettingsRepository>()));
+    gh.factory<_i19.GetOpenAiKeyUseCase>(
+        () => _i19.GetOpenAiKeyUseCase(gh<_i14.SettingsRepository>()));
+    gh.singleton<_i20.GoRouter>(
+        injectionModule.goRouter(gh<_i11.RouterFactory>()));
     gh.factory<_i21.HomePageCubit>(() => _i21.HomePageCubit(
           gh<_i4.FilePicker>(),
           gh<_i22.GetOpenAiKeyUseCase>(),
