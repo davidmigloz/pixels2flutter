@@ -39,6 +39,10 @@ jobs:
           flutter config --no-analytics
           dart --disable-analytics
 
+      - name: Clean Pub cache
+        run: |
+          rm -rf $HOME/.pub-cache
+
       - name: Install Dependencies
         run: flutter pub get
 
