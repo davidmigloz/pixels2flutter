@@ -2,7 +2,6 @@
 .idea/
 *.iml
 .dart_tool/
-pubspec.lock
 .vscode/
 .flutter-plugins
 .flutter-plugins-dependencies

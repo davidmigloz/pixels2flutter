@@ -33,7 +33,6 @@ jobs:
         uses: subosito/flutter-action@2783a3f08e1baf891508463f8c6653c258246225
         with:
           channel: 'stable'
-          cache: true
 
       - name: Set-up Flutter
         run: |
