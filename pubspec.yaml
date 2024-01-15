@@ -33,7 +33,7 @@ dependencies:
       ref: 302262ddbba670bbe389e1072000b45bd21cfea3
   super_drag_and_drop: 0.8.2+1
   syntax_highlight: 0.3.0
-  url_launcher: 6.2.2
+  url_launcher: 6.2.3
 
 dev_dependencies:
   flutter_test:
