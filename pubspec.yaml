@@ -24,7 +24,7 @@ dependencies:
   github: 9.22.0
   go_router: 13.0.1
   injectable: 2.3.2
-  langchain: 0.3.2
+  langchain: 0.3.3
   langchain_openai: 0.3.2
   flutter_markdown: 0.6.18+3
   result_dart: #1.1.0
