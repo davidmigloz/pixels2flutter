@@ -25,7 +25,7 @@ dependencies:
   go_router: 13.0.1
   injectable: 2.3.2
   langchain: 0.3.3
-  langchain_openai: 0.3.2
+  langchain_openai: 0.3.3
   flutter_markdown: 0.6.18+3
   result_dart: #1.1.0
     git:
@@ -33,7 +33,7 @@ dependencies:
       ref: 302262ddbba670bbe389e1072000b45bd21cfea3
   super_drag_and_drop: 0.8.4
   syntax_highlight: 0.3.0
-  url_launcher: 6.2.3
+  url_launcher: 6.2.4
 
 dev_dependencies:
   flutter_test:

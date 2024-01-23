@@ -612,10 +612,10 @@ packages:
     dependency: "direct main"
     description:
       name: langchain_openai
-      sha256: e1ae38e80665a4e61ff4cb274760d0314228976fbee8082b37d7544b0b4eee5f
+      sha256: "032a2abe03db9bfe84132a05911e9e9fbfa6a6a8fcf3a9a0875a805fc0072c10"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.2"
+    version: "0.3.3"
   langchain_tiktoken:
     dependency: transitive
     description:
@@ -700,10 +700,10 @@ packages:
     dependency: transitive
     description:
       name: openai_dart
-      sha256: "8dfc9a60427a54bb0cd9e2113989254d5fb6fcf9d359b38a0cd6dfe9a074129a"
+      sha256: "38020cd123355e1d5b6d8061ff8c39903e0a8e310a0d9f69698b0474e7627645"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.4"
+    version: "0.1.5"
   package_config:
     dependency: transitive
     description:
@@ -1026,10 +1026,10 @@ packages:
     dependency: "direct main"
     description:
       name: url_launcher
-      sha256: d25bb0ca00432a5e1ee40e69c36c85863addf7cc45e433769d61bed3fe81fd96
+      sha256: c512655380d241a337521703af62d2c122bf7b77a46ff7dd750092aa9433499c
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.3"
+    version: "6.2.4"
   url_launcher_android:
     dependency: transitive
     description:
