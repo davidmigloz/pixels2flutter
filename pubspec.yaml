@@ -22,7 +22,7 @@ dependencies:
   freezed_annotation: 2.4.1
   get_it: 7.6.7
   github: 9.22.0
-  go_router: 13.0.1
+  go_router: 13.1.0
   injectable: 2.3.2
   langchain: 0.3.3
   langchain_openai: 0.3.3
