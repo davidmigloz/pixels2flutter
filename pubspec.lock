@@ -604,10 +604,10 @@ packages:
     dependency: "direct main"
     description:
       name: langchain
-      sha256: cfda6d993bf8b645cc1643d05228bf6f58e23903a45f7b8bf1eb1bede23513db
+      sha256: "478541180aff423c1f334f57cedee6dd5571aa6e541bec7efb4bdf640d97e27f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.0"
+    version: "0.4.1"
   langchain_openai:
     dependency: "direct main"
     description:
