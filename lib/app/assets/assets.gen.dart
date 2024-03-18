@@ -34,7 +34,7 @@ class Assets {
   static const SvgGenImage selectImage = SvgGenImage('assets/select_image.svg');
 
   /// List of all assets
-  List<dynamic> get values => [
+  static List<dynamic> get values => [
         examplePingPong,
         examplePingpongGenerated,
         exampleWireframe,
