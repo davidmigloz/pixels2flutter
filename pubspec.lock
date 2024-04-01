@@ -229,10 +229,10 @@ packages:
     dependency: transitive
     description:
       name: device_info_plus
-      sha256: "77f757b789ff68e4eaf9c56d1752309bd9f7ad557cb105b938a7f8eb89e59110"
+      sha256: "50fb435ed30c6d2525cbfaaa0f46851ea6131315f213c0d921b0e407b34e3b84"
       url: "https://pub.dev"
     source: hosted
-    version: "9.1.2"
+    version: "10.0.1"
   device_info_plus_platform_interface:
     dependency: transitive
     description:
@@ -986,26 +986,26 @@ packages:
     dependency: transitive
     description:
       name: super_clipboard
-      sha256: ea683cedf63d7d92731b53891a6baabf7d7e5b38ef10ab7a2ed145bd16af159c
+      sha256: "42348119cac72f334c33866515a3bc84350aaf72e5d977f1abd35ab44e529dfc"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.9"
+    version: "0.8.10"
   super_drag_and_drop:
     dependency: "direct main"
     description:
       name: super_drag_and_drop
-      sha256: "3143f0e38a8c1bd5eef800c32c9dd09da69b779e0ee0246d50f272df17048367"
+      sha256: d176207ab74cc223fb48a8a7f47de45ef294ca66d4e48f6fa565365d4effd291
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.9"
+    version: "0.8.10"
   super_native_extensions:
     dependency: transitive
     description:
       name: super_native_extensions
-      sha256: "9ebae48891159d3365d342d6d43abeb5b702758ed30d2b0cc6c125fa0ad577e3"
+      sha256: abd3b8cb479ca685132472202c70cc11ebb8f4242080f290130d1377bab7cbc1
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.9"
+    version: "0.8.10"
   syntax_highlight:
     dependency: "direct main"
     description:
@@ -1178,10 +1178,10 @@ packages:
     dependency: transitive
     description:
       name: web
-      sha256: "1d9158c616048c38f712a6646e317a3426da10e884447626167240d45209cbad"
+      sha256: "97da13628db363c635202ad97068d47c5b8aa555808e7a9411963c533b449b27"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.0"
+    version: "0.5.1"
   web_socket_channel:
     dependency: transitive
     description:
