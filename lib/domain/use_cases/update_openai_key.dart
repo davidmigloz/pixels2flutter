@@ -27,7 +27,7 @@ class UpdateOpenAiKeyUseCase implements AsyncUseCase<UpdateOpenAIKeyUseCaseParam
       if (params.storeApiKeys) {
         await _settingsRepository.saveOpenAiKey(params.key);
       }
-      return Result.success(unit);
+      return const Result.success(unit);
     } on Exception catch (e) {
       return Result.failure(e);
     }

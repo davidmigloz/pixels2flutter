@@ -24,7 +24,7 @@ class UpdateGitHubKeyUseCase implements AsyncUseCase<UpdateGitHubKeyUseCaseParam
       if (params.storeApiKeys) {
         await _settingsRepository.saveGitHubKey(params.key);
       }
-      return Result.success(unit);
+      return const Result.success(unit);
     } on Exception catch (e) {
       return Result.failure(e);
     }
