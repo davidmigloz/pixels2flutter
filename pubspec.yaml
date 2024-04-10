@@ -20,15 +20,15 @@ dependencies:
   flutter_secure_storage: 9.0.0
   flutter_svg: 2.0.10+1
   freezed_annotation: 2.4.1
-  get_it: 7.6.7
+  get_it: 7.6.8
   github: 9.24.0
-  go_router: 13.2.2
+  go_router: 13.2.3
   injectable: 2.4.1
-  langchain: 0.4.2
-  langchain_openai: 0.4.1
-  flutter_markdown: 0.6.22
+  langchain: 0.5.0
+  langchain_openai: 0.5.0
+  flutter_markdown: 0.6.22+1
   result_dart: 1.1.1
-  super_drag_and_drop: 0.8.10
+  super_drag_and_drop: 0.8.11
   syntax_highlight: 0.4.0
   url_launcher: 6.2.5
 
@@ -37,7 +37,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: 2.4.9
   flutter_gen_runner: 5.4.0
-  freezed: 2.4.7
+  freezed: 2.5.1
   injectable_generator: 2.6.1
 
 flutter:
