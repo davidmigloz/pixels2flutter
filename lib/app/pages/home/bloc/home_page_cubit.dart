@@ -174,6 +174,7 @@ class HomePageCubit extends Cubit<HomePageState> {
   Future<void> _generateCode() async {
     final stream = _generateCodeFromImageUseCase(
       params: GenerateCodeFromImageUseCaseParams(
+        provider: GenerateCodeProvider.googleAI, // TODO get from UI
         screenshot: state.screenshot!,
         additionalInstructions:
             (state.additionalInstructions?.isNotEmpty ?? false) ? state.additionalInstructions : null,
