@@ -26,7 +26,7 @@ dependencies:
   injectable: 2.4.1
   langchain: 0.5.0
   langchain_openai: 0.5.0
-  flutter_markdown: 0.6.22+1
+  flutter_markdown: 0.7.1
   result_dart: 1.1.1
   super_drag_and_drop: 0.8.11
   syntax_highlight: 0.4.0
