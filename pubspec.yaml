@@ -20,7 +20,7 @@ dependencies:
   flutter_secure_storage: 9.0.0
   flutter_svg: 2.0.10+1
   freezed_annotation: 2.4.1
-  get_it: 7.6.8
+  get_it: 7.7.0
   github: 9.24.0
   go_router: 13.2.3
   injectable: 2.4.1
