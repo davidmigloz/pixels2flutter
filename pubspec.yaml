@@ -4,8 +4,8 @@ version: 1.0.0+1
 publish_to: 'none'
 
 environment:
-  sdk: 3.3.3
-  flutter: 3.19.5
+  sdk: 3.3.4
+  flutter: 3.19.6
 
 dependencies:
   flutter:
@@ -24,11 +24,11 @@ dependencies:
   github: 9.24.0
   go_router: 14.0.2
   injectable: 2.4.1
-  langchain: 0.5.0
-  langchain_openai: 0.5.0
+  langchain: 0.6.0+1
+  langchain_openai: 0.5.1+1
   flutter_markdown: 0.7.1
   result_dart: 1.1.1
-  super_drag_and_drop: 0.8.11
+  super_drag_and_drop: 0.8.12
   syntax_highlight: 0.4.0
   url_launcher: 6.2.6
 
@@ -37,7 +37,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: 2.4.9
   flutter_gen_runner: 5.4.0
-  freezed: 2.5.1
+  freezed: 2.5.2
   injectable_generator: 2.6.1
 
 flutter:
