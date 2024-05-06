@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 import 'package:syntax_highlight/syntax_highlight.dart';
 
+import '../../../core/constants.dart';
 import '../../assets/assets.gen.dart';
 import '../../injection/injection.dart';
 import 'bloc/home_page_cubit.dart';
@@ -15,7 +16,8 @@ class HomePageAppSection extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return BlocBuilder<HomePageCubit, HomePageState>(
-      buildWhen: (final previous, final current) => previous.status != current.status,
+      buildWhen: (final previous, final current) =>
+          previous.status != current.status,
       builder: (final context, final state) {
         switch (state.status) {
           case HomePageStatus.loading:
@@ -217,7 +219,8 @@ class _S2AdditionalInstructions extends StatefulWidget {
   const _S2AdditionalInstructions();
 
   @override
-  State<_S2AdditionalInstructions> createState() => _S2AdditionalInstructionsState();
+  State<_S2AdditionalInstructions> createState() =>
+      _S2AdditionalInstructionsState();
 }
 
 class _S2AdditionalInstructionsState extends State<_S2AdditionalInstructions> {
@@ -282,7 +285,8 @@ class _S2AdditionalInstructionsState extends State<_S2AdditionalInstructions> {
                     ),
                     const SizedBox(height: 8),
                     BlocBuilder<HomePageCubit, HomePageState>(
-                      buildWhen: (final previous, final current) => previous.generateImages != current.generateImages,
+                      buildWhen: (final previous, final current) =>
+                          previous.generateImages != current.generateImages,
                       builder: (final context, final state) {
                         return CheckboxListTile(
                           title: Row(
@@ -294,7 +298,8 @@ class _S2AdditionalInstructionsState extends State<_S2AdditionalInstructions> {
                               ),
                               const SizedBox(width: 8),
                               const Tooltip(
-                                message: 'Enable this option if you want to replicate the images '
+                                message:
+                                    'Enable this option if you want to replicate the images '
                                     'in the screenshot using OpenAI DALL·E image generator.\n'
                                     'Mind that this will increase the generation time and cost.',
                                 child: Icon(Icons.info_outline, size: 16),
@@ -373,23 +378,58 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'We need your OpenAI API key to generate the code and your GitHub personal token to store it in a Gist. '
-            'Check the FAQs below to learn how to get them.',
+          BlocBuilder<HomePageCubit, HomePageState>(
+            builder: (final context, final state) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SegmentedButton<GenerateCodeProvider>(
+                    segments: const <ButtonSegment<GenerateCodeProvider>>[
+                      ButtonSegment<GenerateCodeProvider>(
+                        value: GenerateCodeProvider.openAI,
+                        label: Text('OpenAI'),
+                      ),
+                      ButtonSegment<GenerateCodeProvider>(
+                        value: GenerateCodeProvider.googleAI,
+                        label: Text('Gemini'),
+                      ),
+                    ],
+                    selected: {state.generateCodeProvider},
+                    onSelectionChanged: (final value) {
+                      return cubit.onGenerateCodeProviderChanged(value.first);
+                    },
+                  ),
+                ],
+              );
+            },
           ),
           const SizedBox(height: 24),
           BlocBuilder<HomePageCubit, HomePageState>(
-            buildWhen: (final previous, final current) => previous.error != current.error,
+            builder: (final context, final state) {
+              return Text(
+                'We need your ${state.generateCodeProvider.name.toUpperCase()} API key to generate the code and your GitHub personal token to store it in a Gist. '
+                'Check the FAQs below to learn how to get them.',
+              );
+            },
+          ),
+          const SizedBox(height: 24),
+          BlocBuilder<HomePageCubit, HomePageState>(
+            buildWhen: (final previous, final current) =>
+                previous.error != current.error ||
+                previous.generateCodeProvider != current.generateCodeProvider,
             builder: (final context, final state) {
               return TextField(
                 controller: _openAIController,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
-                  label: const Text('OpenAI API key'),
-                  helperText: 'Your OpenAI account should be at least "Usage tier 1" to use the GPT-4V(ision) model.',
+                  label: Text(
+                      '${state.generateCodeProvider.name.toUpperCase()} API key'),
+                  helperText:
+                      'Your ${state.generateCodeProvider.name.toUpperCase()} account should be at least "Usage tier 1" to use the GPT-4V(ision) model.',
                   errorText: switch (state.error) {
-                    HomePageError.invalidOpenAiApiKey => 'Invalid OpenAI API key. '
-                        'Please generate a valid key at platform.openai.com/api-keys.',
+                    HomePageError.invalidOpenAiApiKey =>
+                      'Invalid OpenAI API key. '
+                          'Please generate a valid key at platform.openai.com/api-keys.',
                     HomePageError.noAccessToGpt4V =>
                       'Your OpenAI account does not have access to the GPT-4V(ision) model. '
                           'Please upgrade your account to "Usage tier 1" at platform.openai.com/account/billing '
@@ -409,7 +449,8 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               label: Text('GitHub personal token'),
-              helperText: 'Only Gists read/write permission is required (used to load the code into DartPad).',
+              helperText:
+                  'Only Gists read/write permission is required (used to load the code into DartPad).',
             ),
             onChanged: cubit.onGithubKeyChanged,
             keyboardType: TextInputType.text,
@@ -417,7 +458,8 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
           ),
           const SizedBox(height: 8),
           BlocBuilder<HomePageCubit, HomePageState>(
-            buildWhen: (final previous, final current) => previous.storeApiKeys != current.storeApiKeys,
+            buildWhen: (final previous, final current) =>
+                previous.storeApiKeys != current.storeApiKeys,
             builder: (final context, final state) {
               return CheckboxListTile(
                 title: Text(
@@ -437,7 +479,8 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
           Center(
             child: BlocBuilder<HomePageCubit, HomePageState>(
               builder: (final context, final state) {
-                final canSubmit = (state.openAiKey?.isNotEmpty ?? false) && (state.githubKey?.isNotEmpty ?? false);
+                final canSubmit = (state.openAiKey?.isNotEmpty ?? false) &&
+                    (state.githubKey?.isNotEmpty ?? false);
                 return FilledButton(
                   onPressed: canSubmit ? cubit.onApiKeysSubmitted : null,
                   child: const Text('Generate code'),
@@ -467,7 +510,8 @@ class _S4Generating extends StatelessWidget {
         child: SingleChildScrollView(
           reverse: true,
           child: BlocBuilder<HomePageCubit, HomePageState>(
-            buildWhen: (final previous, final current) => previous.generatedCode != current.generatedCode,
+            buildWhen: (final previous, final current) =>
+                previous.generatedCode != current.generatedCode,
             builder: (final context, final state) {
               return Text.rich(
                 highlighter.highlight(state.generatedCode ?? ''),

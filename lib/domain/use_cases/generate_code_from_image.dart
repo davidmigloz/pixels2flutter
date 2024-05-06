@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:langchain/langchain.dart';
 import 'package:langchain_google/langchain_google.dart';
 import 'package:langchain_openai/langchain_openai.dart';
+import 'package:pixels2flutter/core/constants.dart';
 import 'package:result_dart/result_dart.dart';
 
 import '../entities/entities.dart';
@@ -12,7 +13,9 @@ import 'use_case.dart';
 
 @injectable
 class GenerateCodeFromImageUseCase
-    implements StreamUseCase<GenerateCodeFromImageUseCaseParams, String, GenerateCodeFromImageFailure> {
+    implements
+        StreamUseCase<GenerateCodeFromImageUseCaseParams, String,
+            GenerateCodeFromImageFailure> {
   const GenerateCodeFromImageUseCase(
     this._chatOpenAI,
     this._chatGoogleGenerativeAI,
@@ -29,18 +32,22 @@ class GenerateCodeFromImageUseCase
       final chatModel = _getChatModel(params.provider);
       final chain = chatModel.pipe(const StringOutputParser());
 
-      final prompt = _getPrompt(params.provider, params.screenshot, params.additionalInstructions);
+      final prompt = _getPrompt(
+          params.provider, params.screenshot, params.additionalInstructions);
 
       final stream = chain.stream(prompt);
 
       yield* stream.transform(
         // Wrap the result into a Result class and map errors
         StreamTransformer((final input, final cancelOnError) {
-          final controller = StreamController<Result<String, GenerateCodeFromImageFailure>>(sync: true);
+          final controller =
+              StreamController<Result<String, GenerateCodeFromImageFailure>>(
+                  sync: true);
           controller.onListen = () {
             final subscription = input.listen(
               (final String data) => controller.add(Result.success(data)),
-              onError: (final Object error) => controller.add(Result.failure(_mapErrorToFailure(error))),
+              onError: (final Object error) =>
+                  controller.add(Result.failure(_mapErrorToFailure(error))),
               onDone: controller.close,
               cancelOnError: cancelOnError,
             );
@@ -57,7 +64,8 @@ class GenerateCodeFromImageUseCase
     }
   }
 
-  Runnable<PromptValue, ChatModelOptions, ChatResult> _getChatModel(final GenerateCodeProvider provider) {
+  Runnable<PromptValue, ChatModelOptions, ChatResult> _getChatModel(
+      final GenerateCodeProvider provider) {
     return switch (provider) {
       GenerateCodeProvider.openAI => _chatOpenAI.bind(
           const ChatOpenAIOptions(
@@ -92,7 +100,8 @@ class GenerateCodeFromImageUseCase
             data: base64Encode(screenshot.data),
             imageDetail: ChatMessageContentImageDetail.high,
           ),
-          if (additionalInstructions != null) ChatMessageContent.text(additionalInstructions),
+          if (additionalInstructions != null)
+            ChatMessageContent.text(additionalInstructions),
           if (userPrompt != null) userPrompt,
         ]),
       ),
@@ -109,7 +118,8 @@ class GenerateCodeFromImageUseCase
   ChatMessageContent? _getUserPrompt(final GenerateCodeProvider provider) {
     return switch (provider) {
       GenerateCodeProvider.openAI => ChatMessageContent.text(_openAIUserPrompt),
-      GenerateCodeProvider.googleAI => ChatMessageContent.text(_googleAIUserPrompt),
+      GenerateCodeProvider.googleAI =>
+        ChatMessageContent.text(_googleAIUserPrompt),
     };
   }
 
@@ -135,11 +145,6 @@ class GenerateCodeFromImageUseCaseParams {
   final GenerateCodeProvider provider;
   final Screenshot screenshot;
   final String? additionalInstructions;
-}
-
-enum GenerateCodeProvider {
-  openAI,
-  googleAI,
 }
 
 enum GenerateCodeFromImageFailure {

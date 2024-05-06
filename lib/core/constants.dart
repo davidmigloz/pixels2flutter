@@ -1,0 +1,4 @@
+enum GenerateCodeProvider {
+  openAI,
+  googleAI,
+}

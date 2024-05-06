@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 
+import '../../../../core/constants.dart';
 import '../../../../domain/domain.dart';
 import '../../../../domain/entities/entities.dart';
 import '../../../navigation/navigation_urls.dart';
@@ -76,7 +77,8 @@ class HomePageCubit extends Cubit<HomePageState> {
     }
 
     final file = res.files.first;
-    final mimeType = file.extension?.toLowerCase() == 'png' ? 'image/png' : 'image/jpeg';
+    final mimeType =
+        file.extension?.toLowerCase() == 'png' ? 'image/png' : 'image/jpeg';
     final imageBytes = file.bytes!;
     _onScreenshotLoaded(
       Screenshot(
@@ -147,6 +149,10 @@ class HomePageCubit extends Cubit<HomePageState> {
     emit(state.copyWith(storeApiKeys: storeApiKeys));
   }
 
+  void onGenerateCodeProviderChanged(final GenerateCodeProvider provider) {
+    emit(state.copyWith(generateCodeProvider: provider));
+  }
+
   Future<void> onApiKeysSubmitted() async {
     final openAiKey = state.openAiKey;
     final githubKey = state.githubKey;
@@ -177,7 +183,9 @@ class HomePageCubit extends Cubit<HomePageState> {
         provider: GenerateCodeProvider.googleAI, // TODO get from UI
         screenshot: state.screenshot!,
         additionalInstructions:
-            (state.additionalInstructions?.isNotEmpty ?? false) ? state.additionalInstructions : null,
+            (state.additionalInstructions?.isNotEmpty ?? false)
+                ? state.additionalInstructions
+                : null,
       ),
     );
     await _generateCodeSubscription?.cancel();
@@ -200,14 +208,21 @@ class HomePageCubit extends Cubit<HomePageState> {
     );
   }
 
-  Future<void> _onGenerateCodeFailure(final GenerateCodeFromImageFailure failure) async {
+  Future<void> _onGenerateCodeFailure(
+      final GenerateCodeFromImageFailure failure) async {
     switch (failure) {
       case GenerateCodeFromImageFailure.invalidApiKey:
-        emit(state.copyWith(status: HomePageStatus.s3ApiKeys, error: HomePageError.invalidOpenAiApiKey));
+        emit(state.copyWith(
+            status: HomePageStatus.s3ApiKeys,
+            error: HomePageError.invalidOpenAiApiKey));
       case GenerateCodeFromImageFailure.noAccessToGpt4V:
-        emit(state.copyWith(status: HomePageStatus.s3ApiKeys, error: HomePageError.noAccessToGpt4V));
+        emit(state.copyWith(
+            status: HomePageStatus.s3ApiKeys,
+            error: HomePageError.noAccessToGpt4V));
       case GenerateCodeFromImageFailure.unknown:
-        emit(state.reset().copyWith(status: HomePageStatus.s1SelectImage, error: HomePageError.unknown));
+        emit(state.reset().copyWith(
+            status: HomePageStatus.s1SelectImage,
+            error: HomePageError.unknown));
     }
   }
 
@@ -244,7 +259,8 @@ class HomePageCubit extends Cubit<HomePageState> {
   }
 
   Future<void> _onErrorCreatingGist(final Exception e) async {
-    emit(state.reset().copyWith(status: HomePageStatus.s1SelectImage, error: HomePageError.unknown));
+    emit(state.reset().copyWith(
+        status: HomePageStatus.s1SelectImage, error: HomePageError.unknown));
   }
 
   void onExampleSelected(final int example) {

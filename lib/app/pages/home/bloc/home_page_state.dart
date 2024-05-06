@@ -13,6 +13,7 @@ class HomePageState extends Equatable {
     this.generatedCode,
     this.error,
     this.selectedExample = 0,
+    this.generateCodeProvider = GenerateCodeProvider.openAI,
   });
 
   final HomePageStatus status;
@@ -25,6 +26,7 @@ class HomePageState extends Equatable {
   final String? generatedCode;
   final HomePageError? error;
   final int selectedExample;
+  final GenerateCodeProvider generateCodeProvider;
 
   HomePageState copyWith({
     final HomePageStatus? status,
@@ -37,11 +39,13 @@ class HomePageState extends Equatable {
     final String? generatedCode,
     final HomePageError? error,
     final int? selectedExample,
+    final GenerateCodeProvider? generateCodeProvider,
   }) {
     return HomePageState(
       status: status ?? this.status,
       screenshot: screenshot ?? this.screenshot,
-      additionalInstructions: additionalInstructions ?? this.additionalInstructions,
+      additionalInstructions:
+          additionalInstructions ?? this.additionalInstructions,
       generateImages: generateImages ?? this.generateImages,
       storeApiKeys: storeApiKeys ?? this.storeApiKeys,
       openAiKey: openAiKey ?? this.openAiKey,
@@ -49,6 +53,7 @@ class HomePageState extends Equatable {
       generatedCode: generatedCode ?? this.generatedCode,
       error: error,
       selectedExample: selectedExample ?? this.selectedExample,
+      generateCodeProvider: generateCodeProvider ?? this.generateCodeProvider,
     );
   }
 
@@ -59,6 +64,7 @@ class HomePageState extends Equatable {
       openAiKey: openAiKey,
       githubKey: githubKey,
       selectedExample: selectedExample,
+      generateCodeProvider: GenerateCodeProvider.openAI,
     );
   }
 
@@ -74,6 +80,7 @@ class HomePageState extends Equatable {
         generatedCode,
         error,
         selectedExample,
+        generateCodeProvider,
       ];
 }
 
