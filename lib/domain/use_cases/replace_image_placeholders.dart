@@ -31,8 +31,8 @@ class ReplaceImagePlaceholdersUseCase
       );
       final images = await Future.wait(
         uris.map((final uri) {
-          final description = Uri.parse(uri ?? '').queryParameters['description'];
-          return dallE.invoke({'input': description});
+          final description = Uri.parse(uri ?? '').queryParameters['description'] ?? '';
+          return dallE.invoke(description);
         }),
       );
 
