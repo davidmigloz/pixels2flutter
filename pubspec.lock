@@ -532,18 +532,18 @@ packages:
     dependency: transitive
     description:
       name: irondash_engine_context
-      sha256: "4f5e2629296430cce08cdff42e47cef07b8f74a64fdbdfb0525d147bc1a969a2"
+      sha256: e8398cca5e28dc280c87b8c35a6ff4e15be844eabec51e713631f83903563681
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.2"
+    version: "0.5.3"
   irondash_message_channel:
     dependency: transitive
     description:
       name: irondash_message_channel
-      sha256: dd581214215dca054bd9873209d690ec3609288c28774cb509dbd86b21180cf8
+      sha256: b4101669776509c76133b8917ab8cfc704d3ad92a8c450b92934dd8884a2f060
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.0"
+    version: "0.7.0"
   js:
     dependency: transitive
     description:
@@ -929,26 +929,26 @@ packages:
     dependency: transitive
     description:
       name: super_clipboard
-      sha256: cf9ab12d00856318dcf84d5e16cfd7b53a34ee74ca55cf2c566f0cc9d2a66013
+      sha256: "17978c3dc7b6ebf588a8007448f668ad6aa64733b60ed2ae18152113cca39fa2"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.12"
+    version: "0.8.16"
   super_drag_and_drop:
     dependency: "direct main"
     description:
       name: super_drag_and_drop
-      sha256: "0a6fafc23ff5c82aa55847b725698d9f9c31a0aef7fb3ac7b4296cbff1d6a956"
+      sha256: "1d9fa943fa01961953f3ce14740954eb4d8a2530384d495462f858abba926250"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.12"
+    version: "0.8.16"
   super_native_extensions:
     dependency: transitive
     description:
       name: super_native_extensions
-      sha256: "530a2118d032483b192713c68ed7105fe64418f22492165f87ed01f9b01d4965"
+      sha256: d2d1259c7e43966173c394ef64475e612bd5822095f6cd1008eb978175ce2f0d
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.12"
+    version: "0.8.16"
   syntax_highlight:
     dependency: "direct main"
     description:
