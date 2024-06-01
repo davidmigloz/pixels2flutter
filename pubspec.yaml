@@ -28,7 +28,7 @@ dependencies:
   langchain_openai: 0.6.2
   flutter_markdown: 0.7.1
   result_dart: 1.1.1
-  super_drag_and_drop: 0.8.12
+  super_drag_and_drop: 0.8.16
   syntax_highlight: 0.4.0
   url_launcher: 6.2.6
 
