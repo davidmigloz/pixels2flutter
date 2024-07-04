@@ -32,9 +32,9 @@ class HomePageFAQsSection extends StatelessWidget {
       content: '**OpenAI key:** (required to generate the code) \n'
           '1. Log in or sign up to the [OpenAI platform](https://platform.openai.com/docs/overview).\n'
           '2. Go to [Settings > Limits](https://platform.openai.com/account/limits) page and check your "Usage tier". '
-          'Your account should be at least "Usage tier 1" to use the GPT-4V(ision) model. '
+          'Your account should be at least "Usage tier 1" to use the GPT-4o model. '
           'If it is not, you can buy \$5 worth of credits to upgrade your tier.\n'
-          '3. Go to the [API keys](https://platform.openai.com/api-keys) page.\n'
+          '3. Go to [Default project > API keys](https://platform.openai.com/api-keys) page.\n'
           '4. Click on the "Create new API key" button.\n'
           '5. Copy the key.\n'
           '6. *Recommended*: go to [Usage page](https://platform.openai.com/usage) and set a monthly limit to avoid surprises.\n\n'
@@ -58,7 +58,7 @@ class HomePageFAQsSection extends StatelessWidget {
     _FAQsItem(
       title: 'Can I use an open-source alternative to OpenAI?',
       content: r'At the moment, [pixels2flutter.dev](https://pixels2flutter.dev) only supports '
-          r'[OpenAI GPT-4V(ision)](https://openai.com/research/gpt-4v-system-card) model. '
+          r'[OpenAI GPT-4o](https://openai.com/index/hello-gpt-4o) model. '
           r'But as soon as there is an open-source alternative that produces similar results '
           r'we will add support for it.',
     ),

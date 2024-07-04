@@ -18,8 +18,8 @@ class HomePageHowItWorksSection extends StatelessWidget {
     ),
     _HowItWorksItem(
       title: 'Code generation',
-      content: 'The app leverages the power of OpenAI GPT-4V(ision) multimodal LLM to '
-          'transform your screenshot and instructions into code.',
+      content: 'The app leverages the power of OpenAI GPT-4o multimodal LLM to '
+          'transform your screenshot and instructions into Flutter code.',
     ),
     _HowItWorksItem(
       title: 'Run the code',

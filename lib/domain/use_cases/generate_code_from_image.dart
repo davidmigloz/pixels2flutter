@@ -23,7 +23,7 @@ class GenerateCodeFromImageUseCase
     try {
       final chatModel = _chatOpenAI.bind(
         const ChatOpenAIOptions(
-          model: 'gpt-4-vision-preview',
+          model: 'gpt-4o',
           maxTokens: 4096,
           temperature: 0,
         ),

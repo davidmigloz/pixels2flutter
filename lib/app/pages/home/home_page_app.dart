@@ -386,14 +386,13 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   label: const Text('OpenAI API key'),
-                  helperText: 'Your OpenAI account should be at least "Usage tier 1" to use the GPT-4V(ision) model.',
+                  helperText: 'Your OpenAI account should be at least "Usage tier 1" to use the GPT-4o model.',
                   errorText: switch (state.error) {
                     HomePageError.invalidOpenAiApiKey => 'Invalid OpenAI API key. '
                         'Please generate a valid key at platform.openai.com/api-keys.',
-                    HomePageError.noAccessToGpt4V =>
-                      'Your OpenAI account does not have access to the GPT-4V(ision) model. '
-                          'Please upgrade your account to "Usage tier 1" at platform.openai.com/account/billing '
-                          '(check the FAQs below for more info).',
+                    HomePageError.noAccessToGpt4V => 'Your OpenAI account does not have access to the GPT-4o model. '
+                        'Please upgrade your account to "Usage tier 1" at platform.openai.com/account/billing '
+                        '(check the FAQs below for more info).',
                     _ => null,
                   },
                 ),
