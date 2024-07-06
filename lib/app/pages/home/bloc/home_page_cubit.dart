@@ -11,6 +11,8 @@ import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 import '../../../../core/constants.dart';
 import '../../../../domain/domain.dart';
 import '../../../../domain/entities/entities.dart';
+import '../../../../domain/use_cases/get_gemini_key.dart';
+import '../../../../domain/use_cases/update_gemini_key.dart';
 import '../../../navigation/navigation_urls.dart';
 
 part 'home_page_state.dart';
@@ -20,8 +22,10 @@ class HomePageCubit extends Cubit<HomePageState> {
   HomePageCubit(
     this._filePicker,
     this._getOpenAiKeyUseCase,
+    this._getGeminiKeyUseCase,
     this._getGitHubKeyUseCase,
     this._updateOpenAiKeyUseCase,
+    this._updateGeminiKeyUseCase,
     this._updateGitHubKeyUseCase,
     this._generateCodeFromImageUseCase,
     this._replaceImagePlaceholdersUseCase,
@@ -33,8 +37,10 @@ class HomePageCubit extends Cubit<HomePageState> {
 
   final FilePicker _filePicker;
   final GetOpenAiKeyUseCase _getOpenAiKeyUseCase;
+  final GetGeminiKeyUseCase _getGeminiKeyUseCase;
   final GetGitHubKeyUseCase _getGitHubKeyUseCase;
   final UpdateOpenAiKeyUseCase _updateOpenAiKeyUseCase;
+  final UpdateGeminiKeyUseCase _updateGeminiKeyUseCase;
   final UpdateGitHubKeyUseCase _updateGitHubKeyUseCase;
   final GenerateCodeFromImageUseCase _generateCodeFromImageUseCase;
   final ReplaceImagePlaceholdersUseCase _replaceImagePlaceholdersUseCase;
@@ -48,11 +54,14 @@ class HomePageCubit extends Cubit<HomePageState> {
       return;
     }
     final openAiKey = (await _getOpenAiKeyUseCase()).getOrNull();
+    final geminiKey = (await _getGeminiKeyUseCase()).getOrNull();
     final githubKey = (await _getGitHubKeyUseCase()).getOrNull();
+
     emit(
       state.copyWith(
         status: HomePageStatus.s1SelectImage,
         openAiKey: openAiKey,
+        geminiKey: geminiKey,
         githubKey: githubKey,
         storeApiKeys: openAiKey?.isNotEmpty,
       ),
@@ -141,6 +150,10 @@ class HomePageCubit extends Cubit<HomePageState> {
     emit(state.copyWith(openAiKey: openAiKey));
   }
 
+  void onGeminiKeyChanged(final String geminiKey) {
+    emit(state.copyWith(geminiKey: geminiKey));
+  }
+
   void onGithubKeyChanged(final String githubKey) {
     emit(state.copyWith(githubKey: githubKey));
   }
@@ -155,15 +168,23 @@ class HomePageCubit extends Cubit<HomePageState> {
 
   Future<void> onApiKeysSubmitted() async {
     final openAiKey = state.openAiKey;
+    final geminiKey = state.geminiKey;
     final githubKey = state.githubKey;
     final storeApiKeys = state.storeApiKeys;
-    if (openAiKey == null || githubKey == null) {
+    if (openAiKey == null || githubKey == null || geminiKey == null) {
       return;
     }
 
     await _updateOpenAiKeyUseCase(
       params: UpdateOpenAIKeyUseCaseParams(
         key: openAiKey,
+        storeApiKeys: storeApiKeys,
+      ),
+    );
+
+    await _updateGeminiKeyUseCase(
+      params: UpdateGeminiKeyUseCaseParams(
+        key: geminiKey,
         storeApiKeys: storeApiKeys,
       ),
     );
@@ -180,7 +201,7 @@ class HomePageCubit extends Cubit<HomePageState> {
   Future<void> _generateCode() async {
     final stream = _generateCodeFromImageUseCase(
       params: GenerateCodeFromImageUseCaseParams(
-        provider: GenerateCodeProvider.googleAI, // TODO get from UI
+        provider: state.generateCodeProvider,
         screenshot: state.screenshot!,
         additionalInstructions:
             (state.additionalInstructions?.isNotEmpty ?? false)
@@ -209,20 +230,30 @@ class HomePageCubit extends Cubit<HomePageState> {
   }
 
   Future<void> _onGenerateCodeFailure(
-      final GenerateCodeFromImageFailure failure) async {
+    final GenerateCodeFromImageFailure failure,
+  ) async {
     switch (failure) {
       case GenerateCodeFromImageFailure.invalidApiKey:
-        emit(state.copyWith(
+        emit(
+          state.copyWith(
             status: HomePageStatus.s3ApiKeys,
-            error: HomePageError.invalidOpenAiApiKey));
+            error: HomePageError.invalidOpenAiApiKey,
+          ),
+        );
       case GenerateCodeFromImageFailure.noAccessToGpt4V:
-        emit(state.copyWith(
+        emit(
+          state.copyWith(
             status: HomePageStatus.s3ApiKeys,
-            error: HomePageError.noAccessToGpt4V));
+            error: HomePageError.noAccessToGpt4V,
+          ),
+        );
       case GenerateCodeFromImageFailure.unknown:
-        emit(state.reset().copyWith(
-            status: HomePageStatus.s1SelectImage,
-            error: HomePageError.unknown));
+        emit(
+          state.reset().copyWith(
+                status: HomePageStatus.s1SelectImage,
+                error: HomePageError.unknown,
+              ),
+        );
     }
   }
 
@@ -259,8 +290,12 @@ class HomePageCubit extends Cubit<HomePageState> {
   }
 
   Future<void> _onErrorCreatingGist(final Exception e) async {
-    emit(state.reset().copyWith(
-        status: HomePageStatus.s1SelectImage, error: HomePageError.unknown));
+    emit(
+      state.reset().copyWith(
+            status: HomePageStatus.s1SelectImage,
+            error: HomePageError.unknown,
+          ),
+    );
   }
 
   void onExampleSelected(final int example) {

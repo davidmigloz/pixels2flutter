@@ -1,32 +1,29 @@
 import 'package:injectable/injectable.dart';
-import 'package:langchain_openai/langchain_openai.dart';
+import 'package:langchain_google/langchain_google.dart';
 import 'package:result_dart/result_dart.dart';
 
 import '../../data/dart.dart';
 import 'use_case.dart';
 
 @injectable
-class UpdateOpenAiKeyUseCase
-    implements AsyncUseCase<UpdateOpenAIKeyUseCaseParams, Unit, Exception> {
-  const UpdateOpenAiKeyUseCase(
-    this._chatOpenAI,
-    this._dallETool,
+class UpdateGeminiKeyUseCase
+    implements AsyncUseCase<UpdateGeminiKeyUseCaseParams, Unit, Exception> {
+  const UpdateGeminiKeyUseCase(
+    this._chatGoogleGenerativeAI,
     this._settingsRepository,
   );
 
-  final ChatOpenAI _chatOpenAI;
-  final OpenAIDallETool _dallETool;
+  final ChatGoogleGenerativeAI _chatGoogleGenerativeAI;
   final SettingsRepository _settingsRepository;
 
   @override
   Future<Result<Unit, Exception>> call({
-    required final UpdateOpenAIKeyUseCaseParams params,
+    required final UpdateGeminiKeyUseCaseParams params,
   }) async {
     try {
-      _chatOpenAI.apiKey = params.key;
-      _dallETool.apiKey = params.key;
+      _chatGoogleGenerativeAI.apiKey = params.key;
       if (params.storeApiKeys) {
-        await _settingsRepository.saveOpenAiKey(params.key);
+        await _settingsRepository.saveGeminiKey(params.key);
       }
       return const Result.success(unit);
     } on Exception catch (e) {
@@ -35,8 +32,8 @@ class UpdateOpenAiKeyUseCase
   }
 }
 
-class UpdateOpenAIKeyUseCaseParams {
-  const UpdateOpenAIKeyUseCaseParams({
+class UpdateGeminiKeyUseCaseParams {
+  const UpdateGeminiKeyUseCaseParams({
     required this.key,
     required this.storeApiKeys,
   });

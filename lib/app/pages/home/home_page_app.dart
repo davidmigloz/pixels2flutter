@@ -249,7 +249,6 @@ class _S2AdditionalInstructionsState extends State<_S2AdditionalInstructions> {
 
   @override
   Widget build(final BuildContext context) {
-    final theme = Theme.of(context);
     final cubit = context.read<HomePageCubit>();
     final imageBytes = cubit.state.screenshot!.data;
     return _AppCardBody(
@@ -283,39 +282,6 @@ class _S2AdditionalInstructionsState extends State<_S2AdditionalInstructions> {
                       minLines: 6,
                       maxLines: 6,
                     ),
-                    const SizedBox(height: 8),
-                    BlocBuilder<HomePageCubit, HomePageState>(
-                      buildWhen: (final previous, final current) =>
-                          previous.generateImages != current.generateImages,
-                      builder: (final context, final state) {
-                        return CheckboxListTile(
-                          title: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'Generate images using OpenAI DALL·E',
-                                style: theme.textTheme.bodyMedium,
-                              ),
-                              const SizedBox(width: 8),
-                              const Tooltip(
-                                message:
-                                    'Enable this option if you want to replicate the images '
-                                    'in the screenshot using OpenAI DALL·E image generator.\n'
-                                    'Mind that this will increase the generation time and cost.',
-                                child: Icon(Icons.info_outline, size: 16),
-                              ),
-                            ],
-                          ),
-                          value: state.generateImages,
-                          onChanged: (final value) {
-                            return cubit.onGenerateImagesChanged(
-                              generateImages: value ?? false,
-                            );
-                          },
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 8),
                   ],
                 ),
               ),
@@ -423,7 +389,8 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
                   label: Text(
-                      '${state.generateCodeProvider.name.toUpperCase()} API key'),
+                    '${state.generateCodeProvider.name.toUpperCase()} API key',
+                  ),
                   helperText:
                       'Your ${state.generateCodeProvider.name.toUpperCase()} account should be at least "Usage tier 1" to use the GPT-4V(ision) model.',
                   errorText: switch (state.error) {
@@ -437,7 +404,10 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
                     _ => null,
                   },
                 ),
-                onChanged: cubit.onOpenAiKeyChanged,
+                onChanged:
+                    (state.generateCodeProvider == GenerateCodeProvider.openAI)
+                        ? cubit.onOpenAiKeyChanged
+                        : cubit.onGeminiKeyChanged,
                 keyboardType: TextInputType.text,
                 obscureText: true,
               );
@@ -475,12 +445,14 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
               );
             },
           ),
+          const GenerateImagesCheckbox(),
           const SizedBox(height: 16),
           Center(
             child: BlocBuilder<HomePageCubit, HomePageState>(
               builder: (final context, final state) {
-                final canSubmit = (state.openAiKey?.isNotEmpty ?? false) &&
-                    (state.githubKey?.isNotEmpty ?? false);
+                final canSubmit = (state.openAiKey?.isNotEmpty ?? false) ||
+                    (state.geminiKey?.isNotEmpty ?? false) &&
+                        (state.githubKey?.isNotEmpty ?? false);
                 return FilledButton(
                   onPressed: canSubmit ? cubit.onApiKeysSubmitted : null,
                   child: const Text('Generate code'),
@@ -490,6 +462,49 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class GenerateImagesCheckbox extends StatelessWidget {
+  const GenerateImagesCheckbox({
+    super.key,
+  });
+
+  @override
+  Widget build(final BuildContext context) {
+    final cubit = context.read<HomePageCubit>();
+    final theme = Theme.of(context);
+    return BlocBuilder<HomePageCubit, HomePageState>(
+      builder: (final context, final state) {
+        return (state.generateCodeProvider == GenerateCodeProvider.openAI)
+            ? CheckboxListTile(
+                title: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Generate images using OpenAI DALL·E',
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                    const SizedBox(width: 8),
+                    const Tooltip(
+                      message:
+                          'Enable this option if you want to replicate the images '
+                          'in the screenshot using OpenAI DALL·E image generator.\n'
+                          'Mind that this will increase the generation time and cost.',
+                      child: Icon(Icons.info_outline, size: 16),
+                    ),
+                  ],
+                ),
+                value: state.generateImages,
+                onChanged: (final value) {
+                  return cubit.onGenerateImagesChanged(
+                    generateImages: value ?? false,
+                  );
+                },
+              )
+            : const SizedBox.shrink();
+      },
     );
   }
 }

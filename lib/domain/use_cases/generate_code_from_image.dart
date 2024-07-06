@@ -5,9 +5,10 @@ import 'package:injectable/injectable.dart';
 import 'package:langchain/langchain.dart';
 import 'package:langchain_google/langchain_google.dart';
 import 'package:langchain_openai/langchain_openai.dart';
-import 'package:pixels2flutter/core/constants.dart';
+
 import 'package:result_dart/result_dart.dart';
 
+import '../../core/constants.dart';
 import '../entities/entities.dart';
 import 'use_case.dart';
 
@@ -33,7 +34,10 @@ class GenerateCodeFromImageUseCase
       final chain = chatModel.pipe(const StringOutputParser());
 
       final prompt = _getPrompt(
-          params.provider, params.screenshot, params.additionalInstructions);
+        params.provider,
+        params.screenshot,
+        params.additionalInstructions,
+      );
 
       final stream = chain.stream(prompt);
 
@@ -42,7 +46,8 @@ class GenerateCodeFromImageUseCase
         StreamTransformer((final input, final cancelOnError) {
           final controller =
               StreamController<Result<String, GenerateCodeFromImageFailure>>(
-                  sync: true);
+            sync: true,
+          );
           controller.onListen = () {
             final subscription = input.listen(
               (final String data) => controller.add(Result.success(data)),
@@ -65,7 +70,8 @@ class GenerateCodeFromImageUseCase
   }
 
   Runnable<PromptValue, ChatModelOptions, ChatResult> _getChatModel(
-      final GenerateCodeProvider provider) {
+    final GenerateCodeProvider provider,
+  ) {
     return switch (provider) {
       GenerateCodeProvider.openAI => _chatOpenAI.bind(
           const ChatOpenAIOptions(

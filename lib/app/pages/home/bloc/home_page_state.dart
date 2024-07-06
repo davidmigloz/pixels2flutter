@@ -9,6 +9,7 @@ class HomePageState extends Equatable {
     this.generateImages = false,
     this.storeApiKeys = false,
     this.openAiKey,
+    this.geminiKey,
     this.githubKey,
     this.generatedCode,
     this.error,
@@ -22,6 +23,7 @@ class HomePageState extends Equatable {
   final bool generateImages;
   final bool storeApiKeys;
   final String? openAiKey;
+  final String? geminiKey;
   final String? githubKey;
   final String? generatedCode;
   final HomePageError? error;
@@ -35,6 +37,7 @@ class HomePageState extends Equatable {
     final bool? generateImages,
     final bool? storeApiKeys,
     final String? openAiKey,
+    final String? geminiKey,
     final String? githubKey,
     final String? generatedCode,
     final HomePageError? error,
@@ -49,6 +52,7 @@ class HomePageState extends Equatable {
       generateImages: generateImages ?? this.generateImages,
       storeApiKeys: storeApiKeys ?? this.storeApiKeys,
       openAiKey: openAiKey ?? this.openAiKey,
+      geminiKey: geminiKey ?? this.geminiKey,
       githubKey: githubKey ?? this.githubKey,
       generatedCode: generatedCode ?? this.generatedCode,
       error: error,
@@ -62,9 +66,10 @@ class HomePageState extends Equatable {
       status: HomePageStatus.s1SelectImage,
       storeApiKeys: storeApiKeys,
       openAiKey: openAiKey,
+      geminiKey: geminiKey,
       githubKey: githubKey,
       selectedExample: selectedExample,
-      generateCodeProvider: GenerateCodeProvider.openAI,
+      // generateCodeProvider: GenerateCodeProvider.openAI,
     );
   }
 
@@ -76,6 +81,7 @@ class HomePageState extends Equatable {
         generateImages,
         storeApiKeys,
         openAiKey,
+        geminiKey,
         githubKey,
         generatedCode,
         error,

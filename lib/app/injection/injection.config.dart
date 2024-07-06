@@ -20,20 +20,22 @@ import 'package:syntax_highlight/syntax_highlight.dart' as _i9;
 
 import '../../data/dart.dart' as _i15;
 import '../../data/settings/settings_repository.dart' as _i13;
-import '../../domain/domain.dart' as _i23;
+import '../../domain/domain.dart' as _i25;
 import '../../domain/use_cases/create_gist.dart' as _i18;
 import '../../domain/use_cases/delete_gist.dart' as _i17;
 import '../../domain/use_cases/generate_code_from_image.dart' as _i12;
-import '../../domain/use_cases/get_github_key.dart' as _i21;
-import '../../domain/use_cases/get_openai_key.dart' as _i20;
+import '../../domain/use_cases/get_gemini_key.dart' as _i23;
+import '../../domain/use_cases/get_github_key.dart' as _i22;
+import '../../domain/use_cases/get_openai_key.dart' as _i21;
 import '../../domain/use_cases/replace_image_placeholders.dart' as _i10;
+import '../../domain/use_cases/update_gemini_key.dart' as _i20;
 import '../../domain/use_cases/update_github_key.dart' as _i14;
 import '../../domain/use_cases/update_openai_key.dart' as _i16;
 import '../navigation/navigation_routes.dart' as _i3;
 import '../navigation/router.dart' as _i11;
-import '../pages/gist/bloc/gist_screen_cubit.dart' as _i22;
-import '../pages/home/bloc/home_page_cubit.dart' as _i24;
-import 'injection.dart' as _i25;
+import '../pages/gist/bloc/gist_screen_cubit.dart' as _i24;
+import '../pages/home/bloc/home_page_cubit.dart' as _i26;
+import 'injection.dart' as _i27;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -83,32 +85,40 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i18.CreateGistUseCase(gh<_i8.GitHub>()));
     gh.singleton<_i19.GoRouter>(
         () => injectionModule.goRouter(gh<_i11.RouterFactory>()));
-    gh.factory<_i20.GetOpenAiKeyUseCase>(
-        () => _i20.GetOpenAiKeyUseCase(gh<_i15.SettingsRepository>()));
-    gh.factory<_i21.GetGitHubKeyUseCase>(
-        () => _i21.GetGitHubKeyUseCase(gh<_i15.SettingsRepository>()));
-    gh.factoryParam<_i22.GistScreenCubit, String, dynamic>((
+    gh.factory<_i20.UpdateGeminiKeyUseCase>(() => _i20.UpdateGeminiKeyUseCase(
+          gh<_i7.ChatGoogleGenerativeAI>(),
+          gh<_i15.SettingsRepository>(),
+        ));
+    gh.factory<_i21.GetOpenAiKeyUseCase>(
+        () => _i21.GetOpenAiKeyUseCase(gh<_i15.SettingsRepository>()));
+    gh.factory<_i22.GetGitHubKeyUseCase>(
+        () => _i22.GetGitHubKeyUseCase(gh<_i15.SettingsRepository>()));
+    gh.factory<_i23.GetGeminiKeyUseCase>(
+        () => _i23.GetGeminiKeyUseCase(gh<_i15.SettingsRepository>()));
+    gh.factoryParam<_i24.GistScreenCubit, String, dynamic>((
       gistId,
       _,
     ) =>
-        _i22.GistScreenCubit(
+        _i24.GistScreenCubit(
           gistId,
-          gh<_i23.DeleteGistUseCase>(),
+          gh<_i25.DeleteGistUseCase>(),
           gh<_i19.GoRouter>(),
         ));
-    gh.factory<_i24.HomePageCubit>(() => _i24.HomePageCubit(
+    gh.factory<_i26.HomePageCubit>(() => _i26.HomePageCubit(
           gh<_i5.FilePicker>(),
-          gh<_i23.GetOpenAiKeyUseCase>(),
-          gh<_i23.GetGitHubKeyUseCase>(),
-          gh<_i23.UpdateOpenAiKeyUseCase>(),
-          gh<_i23.UpdateGitHubKeyUseCase>(),
-          gh<_i23.GenerateCodeFromImageUseCase>(),
-          gh<_i23.ReplaceImagePlaceholdersUseCase>(),
-          gh<_i23.CreateGistUseCase>(),
+          gh<_i25.GetOpenAiKeyUseCase>(),
+          gh<_i23.GetGeminiKeyUseCase>(),
+          gh<_i25.GetGitHubKeyUseCase>(),
+          gh<_i25.UpdateOpenAiKeyUseCase>(),
+          gh<_i20.UpdateGeminiKeyUseCase>(),
+          gh<_i25.UpdateGitHubKeyUseCase>(),
+          gh<_i25.GenerateCodeFromImageUseCase>(),
+          gh<_i25.ReplaceImagePlaceholdersUseCase>(),
+          gh<_i25.CreateGistUseCase>(),
           gh<_i19.GoRouter>(),
         ));
     return this;
   }
 }
 
-class _$InjectionModule extends _i25.InjectionModule {}
+class _$InjectionModule extends _i27.InjectionModule {}
