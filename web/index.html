@@ -35,11 +35,6 @@
 
   <link rel="manifest" href="manifest.json">
 
-  <script>
-    const serviceWorkerVersion = null;
-  </script>
-  <script src="flutter.js" defer></script>
-
   <style>
         body {
             background: rgb(88,119,245);
@@ -131,21 +126,6 @@
   <div id="loading">
     <img src="/assets/assets/pixels2flutter.svg" alt="Loading..." width="230">
   </div>
-  <script>
-    window.addEventListener('load', async function () {
-        const loading = document.querySelector('#loading');
-        const engineInitializer = await _flutter.loader.loadEntrypoint({
-          serviceWorker: { serviceWorkerVersion }
-        });
-        loading.classList.add('main_done');
-        const appRunner = await engineInitializer.initializeEngine();
-        loading.classList.add('init_done');
-        await appRunner.runApp();
-        setTimeout(() => {
-          loading.classList.add('run_app');
-          setTimeout(() => loading.remove(), 200);
-        }, 200);
-    });
-  </script>
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

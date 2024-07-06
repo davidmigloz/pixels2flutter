@@ -23,15 +23,15 @@ class AppTheme {
       chipTheme: baseTheme.chipTheme.copyWith(
         shape: const _MaterialStateOutlinedBorder(),
         surfaceTintColor: Colors.transparent,
-        color: MaterialStateColor.resolveWith((final states) {
-          if (states.contains(MaterialState.selected)) {
+        color: WidgetStateColor.resolveWith((final states) {
+          if (states.contains(WidgetState.selected)) {
             return baseTheme.colorScheme.primary;
           }
           return baseTheme.colorScheme.surface;
         }),
         labelStyle: baseTheme.textTheme.labelMedium?.copyWith(
-          color: MaterialStateColor.resolveWith((final states) {
-            if (states.contains(MaterialState.selected)) {
+          color: WidgetStateColor.resolveWith((final states) {
+            if (states.contains(WidgetState.selected)) {
               return baseTheme.colorScheme.onPrimary;
             }
             return baseTheme.colorScheme.primary;
@@ -50,12 +50,12 @@ class AppColors {
   static const tertiary = Color(0xFF00BBD3);
 }
 
-class _MaterialStateOutlinedBorder extends StadiumBorder implements MaterialStateOutlinedBorder {
+class _MaterialStateOutlinedBorder extends StadiumBorder implements WidgetStateOutlinedBorder {
   const _MaterialStateOutlinedBorder() : super(side: BorderSide.none);
 
   @override
-  OutlinedBorder resolve(final Set<MaterialState> states) {
-    if (states.contains(MaterialState.selected)) {
+  OutlinedBorder resolve(final Set<WidgetState> states) {
+    if (states.contains(WidgetState.selected)) {
       return const StadiumBorder(
         side: BorderSide(
           color: Colors.transparent,
