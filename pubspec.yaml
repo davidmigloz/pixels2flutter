@@ -25,7 +25,7 @@ dependencies:
   go_router: 14.2.0
   injectable: 2.4.2
   langchain: 0.7.4
-  langchain_openai: 0.6.3
+  langchain_openai: 0.7.0
   flutter_markdown: 0.7.3
   result_dart: 1.1.1
   super_drag_and_drop: 0.8.17
