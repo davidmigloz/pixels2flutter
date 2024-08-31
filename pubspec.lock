@@ -436,10 +436,10 @@ packages:
     dependency: "direct main"
     description:
       name: freezed_annotation
-      sha256: f54946fdb1fa7b01f780841937b1a80783a20b393485f3f6cdf336fd6f4705f2
+      sha256: c2e2d632dd9b8a2b7751117abcfc2b4888ecfe181bd9fca7170d9ef02e595fe2
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.2"
+    version: "2.4.4"
   frontend_server_client:
     dependency: transitive
     description:
@@ -484,10 +484,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: cdae1b9c8bd7efadcef6112e81c903662ef2ce105cbd220a04bbb7c3425b5554
+      sha256: ddc16d34b0d74cb313986918c0f0885a7ba2fc24d8fb8419de75f0015144ccfe
       url: "https://pub.dev"
     source: hosted
-    version: "14.2.0"
+    version: "14.2.3"
   graphs:
     dependency: transitive
     description:
@@ -540,18 +540,18 @@ packages:
     dependency: "direct main"
     description:
       name: injectable
-      sha256: "3c8355a29d11ff28c0311bed754649761f345ef7a13ff66a714380954af51226"
+      sha256: "69874ba3ec10e3a0de3f519a184442878291d928f3299d718813f24642585198"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.2"
+    version: "2.4.4"
   injectable_generator:
     dependency: "direct dev"
     description:
       name: injectable_generator
-      sha256: "2ca3ada337eac0ef6b82f8049c970ddb63947738fdf32ac6cbef8d1567d7ba05"
+      sha256: af403d76c7b18b4217335e0075e950cd0579fd7f8d7bd47ee7c85ada31680ba1
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.1"
+    version: "2.6.2"
   io:
     dependency: transitive
     description:
@@ -596,26 +596,26 @@ packages:
     dependency: "direct main"
     description:
       name: langchain
-      sha256: "64ffdf3f57dfbfad46115084ce7f628ae34ba76c024762400612dbbd7a458e0d"
+      sha256: "39688a1d66f89e83e209163bdd3595a46d37351adf0335de40756e2c40e6ebf4"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.3"
+    version: "0.7.4"
   langchain_core:
     dependency: transitive
     description:
       name: langchain_core
-      sha256: a1d84dba125b568b3a79646fd5b332a07092d80c83e18ccd8b2012b669769f3e
+      sha256: "62d53d0703a69499cffa0a393d834fb108ec75f16ee24f6c9fb1b2f31ed19ec0"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.3"
+    version: "0.3.4"
   langchain_openai:
     dependency: "direct main"
     description:
       name: langchain_openai
-      sha256: "5c303cd250165311f0d5e4555d20136a317bf795abd317c5ce17e94dcac8bc23"
+      sha256: "3384dd01278a710d5e285eb4046da855629f10bc1581d1b0e2708e01fe01a5be"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.3"
+    version: "0.7.0"
   langchain_tiktoken:
     dependency: transitive
     description:
@@ -708,10 +708,10 @@ packages:
     dependency: transitive
     description:
       name: openai_dart
-      sha256: e02ac724eb0a9ec083b014749fefb17f4ecf79828c8cb687ac7623b529733a51
+      sha256: a2acfe7e7945694af6d8733bdd268ad7c8ac4b1ab3f434769a82ef9d74b67174
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.3+1"
+    version: "0.4.0"
   package_config:
     dependency: transitive
     description:
@@ -969,26 +969,26 @@ packages:
     dependency: transitive
     description:
       name: super_clipboard
-      sha256: cdab725bac26655ebd189f4d202d694a8cbc1c21e0f0478ccd7829c71716f09b
+      sha256: c72d2ae8c3a66b20a104523add86b7c2813b1d4cced893a9764b84fb97ac8e2a
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.17"
+    version: "0.8.18"
   super_drag_and_drop:
     dependency: "direct main"
     description:
       name: super_drag_and_drop
-      sha256: "8e00c6082646076f80b972b39d9c27b5311082ea1e8add5fa370ce11c410f7de"
+      sha256: "69ff42851493fae763c796012daa416ce1b6c93ff73cdb240d411cbdc378ece7"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.17"
+    version: "0.8.18"
   super_native_extensions:
     dependency: transitive
     description:
       name: super_native_extensions
-      sha256: fa55d452d34b7112453afbb9fa4d13c0527ff201630d10d86546497179030544
+      sha256: b03f19e54744b65940a7c2cb4f93abd4819b5355aa3464d7b3c9a013b6b76db1
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.17"
+    version: "0.8.18"
   syntax_highlight:
     dependency: "direct main"
     description:
@@ -1222,5 +1222,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: "3.4.3"
-  flutter: ">=3.22.2"
+  dart: "3.4.4"
+  flutter: ">=3.22.3"
