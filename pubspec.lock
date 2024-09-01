@@ -173,10 +173,10 @@ packages:
     dependency: transitive
     description:
       name: cross_file
-      sha256: "55d7b444feb71301ef6b8838dbc1ae02e63dd48c8773f3810ff53bb1e2945b32"
+      sha256: "7caf6a750a0c04effbb52a676dce9a4a592e10ad35c34d6d2d0e4811160d5670"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.4+1"
+    version: "0.3.4+2"
   crypto:
     dependency: transitive
     description:
@@ -245,18 +245,18 @@ packages:
     dependency: transitive
     description:
       name: fetch_api
-      sha256: "74a1e426d41ed9c89353703b2d80400c5d0ecfa144b2d8a7bd8882fbc9e48787"
+      sha256: "97f46c25b480aad74f7cc2ad7ccba2c5c6f08d008e68f95c1077286ce243d0e6"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "2.2.0"
   fetch_client:
     dependency: transitive
     description:
       name: fetch_client
-      sha256: "83c07b07a63526a43630572c72715707ca113a8aa3459efbc7b2d366b79402af"
+      sha256: "9666ee14536778474072245ed5cba07db81ae8eb5de3b7bf4a2d1e2c49696092"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.1.2"
   ffi:
     dependency: transitive
     description:
@@ -492,10 +492,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: "761a297c042deedc1ffbb156d6e2af13886bb305c2a343a4d972504cd67dd938"
+      sha256: b9c29a161230ee03d3ccf545097fccd9b87a5264228c5d348202e0f0c28f9010
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.2"
   http_multi_server:
     dependency: transitive
     description:
@@ -580,26 +580,26 @@ packages:
     dependency: "direct main"
     description:
       name: langchain
-      sha256: "39688a1d66f89e83e209163bdd3595a46d37351adf0335de40756e2c40e6ebf4"
+      sha256: "331f4ba4ce6acd26a52fd88df590dd303ec0fcf62c4b406653aaed69a6481a0a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.4"
+    version: "0.7.5"
   langchain_core:
     dependency: transitive
     description:
       name: langchain_core
-      sha256: "62d53d0703a69499cffa0a393d834fb108ec75f16ee24f6c9fb1b2f31ed19ec0"
+      sha256: "59c9914f9f542d728709d631923cfad7d6d09b7a9dce0f9cec7b508034ff27fb"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.4"
+    version: "0.3.5"
   langchain_openai:
     dependency: "direct main"
     description:
       name: langchain_openai
-      sha256: "3384dd01278a710d5e285eb4046da855629f10bc1581d1b0e2708e01fe01a5be"
+      sha256: "76802754dd49d5440dc5318d87f24aa75bb3910d6f0e90f011dd135effd92563"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.0"
+    version: "0.7.1"
   langchain_tiktoken:
     dependency: transitive
     description:
@@ -692,10 +692,10 @@ packages:
     dependency: transitive
     description:
       name: openai_dart
-      sha256: a2acfe7e7945694af6d8733bdd268ad7c8ac4b1ab3f434769a82ef9d74b67174
+      sha256: "718a59975cecd241817142b1c7b7b0d9229504a88697b25da19e6846848305a8"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.0"
+    version: "0.4.1"
   package_config:
     dependency: transitive
     description:
@@ -1081,10 +1081,10 @@ packages:
     dependency: transitive
     description:
       name: uuid
-      sha256: "814e9e88f21a176ae1359149021870e87f7cddaf633ab678a5d2b0bff7fd1ba8"
+      sha256: f33d6bb662f0e4f79dcd7ada2e6170f3b3a2530c28fc41f49a411ddedd576a77
       url: "https://pub.dev"
     source: hosted
-    version: "4.4.0"
+    version: "4.5.0"
   vector_graphics:
     dependency: transitive
     description:
