@@ -9,8 +9,10 @@ class HomePageFAQsSection extends StatelessWidget {
     _FAQsItem(
       title: 'Is pixels2flutter.dev free?',
       content: 'Yes! [pixels2flutter.dev](https://pixels2flutter.dev) app is totally free.  \n'
-          'But you need to provide your own OpenAI key to generate the code.  \n'
-          r'Every generation costs between $0.01 and $0.1 of OpenAI credits (depending on the length of the code).',
+          'But you need to provide your own model provider key (OpenAI, Google AI, etc.) to generate the code.  \n'
+          r'The cost of each generation depends on the provider you use and the length of the code. '
+          r'On average it costs around $0.01 when using OpenAI. '
+          r'Google AI has a generous free tier that you can take advantage of.',
     ),
     _FAQsItem(
       title: 'Is pixels2flutter.dev open-source?',
@@ -28,18 +30,26 @@ class HomePageFAQsSection extends StatelessWidget {
           '(e.g. use widget X to implement Y, do Z when the user taps on the button, etc.).',
     ),
     _FAQsItem(
-      title: 'Where can I get the OpenAI and GitHub API keys?',
-      content: '**OpenAI key:** (required to generate the code) \n'
-          '1. Log in or sign up to the [OpenAI platform](https://platform.openai.com/docs/overview).\n'
+      title: 'Where can I get the OpenAI API key?',
+      content: '1. Log in or sign up to the [OpenAI platform](https://platform.openai.com/docs/overview).\n'
           '2. Go to [Settings > Limits](https://platform.openai.com/account/limits) page and check your "Usage tier". '
           'Your account should be at least "Usage tier 1" to use the GPT-4o model. '
           'If it is not, you can buy \$5 worth of credits to upgrade your tier.\n'
           '3. Go to [Default project > API keys](https://platform.openai.com/api-keys) page.\n'
           '4. Click on the "Create new API key" button.\n'
           '5. Copy the key.\n'
-          '6. *Recommended*: go to [Usage page](https://platform.openai.com/usage) and set a monthly limit to avoid surprises.\n\n'
-          '**GitHub token:** (required to load the code into DartPad) \n'
-          '1. Log in or sign up to [GitHub](https://github.com).\n'
+          '6. *Recommended*: go to [Usage page](https://platform.openai.com/usage) and set a monthly limit to avoid surprises.\n\n',
+    ),
+    _FAQsItem(
+      title: 'Where can I get the Google AI API key?',
+      content: '1. Log in or sign up to [Google AI Studio](https://aistudio.google.com).\n'
+          '2. Click on the [Get API key](https://aistudio.google.com/app/apikey) button in the navigation rail.\n'
+          '3. Click on the "Create API key" button.\n'
+          '4. Copy the key.\n',
+    ),
+    _FAQsItem(
+      title: 'Where can I get the GitHub API key?',
+      content: '1. Log in or sign up to [GitHub](https://github.com).\n'
           '2. Go to the [Personal access tokens](https://github.com/settings/tokens?type=beta) page.\n'
           '3. Select "Fine-grained personal access tokens".\n'
           '4. Give it a name (e.g. pixels2flutter).\n'
@@ -56,9 +66,9 @@ class HomePageFAQsSection extends StatelessWidget {
           'that your API keys are not being misused.',
     ),
     _FAQsItem(
-      title: 'Can I use an open-source alternative to OpenAI?',
+      title: 'Can I use an open-source alternative to OpenAI or Google AI?',
       content: r'At the moment, [pixels2flutter.dev](https://pixels2flutter.dev) only supports '
-          r'[OpenAI GPT-4o](https://openai.com/index/hello-gpt-4o) model. '
+          r'[OpenAI GPT-4o](https://openai.com/index/hello-gpt-4o) and [Google Gemini 1.5 Pro](https://deepmind.google/technologies/gemini/pro) models. '
           r'But as soon as there is an open-source alternative that produces similar results '
           r'we will add support for it.',
     ),

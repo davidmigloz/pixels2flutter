@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+// ignore: depend_on_referenced_packages
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:injectable/injectable.dart';
 import 'package:langchain/langchain.dart';
 import 'package:langchain_google/langchain_google.dart';
@@ -8,15 +10,12 @@ import 'package:langchain_openai/langchain_openai.dart';
 
 import 'package:result_dart/result_dart.dart';
 
-import '../../core/constants.dart';
 import '../entities/entities.dart';
 import 'use_case.dart';
 
 @injectable
 class GenerateCodeFromImageUseCase
-    implements
-        StreamUseCase<GenerateCodeFromImageUseCaseParams, String,
-            GenerateCodeFromImageFailure> {
+    implements StreamUseCase<GenerateCodeFromImageUseCaseParams, String, GenerateCodeFromImageFailure> {
   const GenerateCodeFromImageUseCase(
     this._chatOpenAI,
     this._chatGoogleGenerativeAI,
@@ -44,15 +43,13 @@ class GenerateCodeFromImageUseCase
       yield* stream.transform(
         // Wrap the result into a Result class and map errors
         StreamTransformer((final input, final cancelOnError) {
-          final controller =
-              StreamController<Result<String, GenerateCodeFromImageFailure>>(
+          final controller = StreamController<Result<String, GenerateCodeFromImageFailure>>(
             sync: true,
           );
           controller.onListen = () {
             final subscription = input.listen(
               (final String data) => controller.add(Result.success(data)),
-              onError: (final Object error) =>
-                  controller.add(Result.failure(_mapErrorToFailure(error))),
+              onError: (final Object error) => controller.add(Result.failure(_mapErrorToFailure(error))),
               onDone: controller.close,
               cancelOnError: cancelOnError,
             );
@@ -75,15 +72,15 @@ class GenerateCodeFromImageUseCase
     return switch (provider) {
       GenerateCodeProvider.openAI => _chatOpenAI.bind(
           const ChatOpenAIOptions(
-            model: 'gpt-4-vision-preview',
-            maxTokens: 4096,
+            model: 'gpt-4o',
+            maxTokens: 16384,
             temperature: 0,
           ),
         ),
       GenerateCodeProvider.googleAI => _chatGoogleGenerativeAI.bind(
           const ChatGoogleGenerativeAIOptions(
-            model: 'gemini-pro-vision',
-            maxOutputTokens: 4096,
+            model: 'gemini-1.5-pro',
+            maxOutputTokens: 8192,
             temperature: 0,
           ),
         ),
@@ -106,8 +103,7 @@ class GenerateCodeFromImageUseCase
             data: base64Encode(screenshot.data),
             imageDetail: ChatMessageContentImageDetail.high,
           ),
-          if (additionalInstructions != null)
-            ChatMessageContent.text(additionalInstructions),
+          if (additionalInstructions != null) ChatMessageContent.text(additionalInstructions),
           if (userPrompt != null) userPrompt,
         ]),
       ),
@@ -124,18 +120,26 @@ class GenerateCodeFromImageUseCase
   ChatMessageContent? _getUserPrompt(final GenerateCodeProvider provider) {
     return switch (provider) {
       GenerateCodeProvider.openAI => ChatMessageContent.text(_openAIUserPrompt),
-      GenerateCodeProvider.googleAI =>
-        ChatMessageContent.text(_googleAIUserPrompt),
+      GenerateCodeProvider.googleAI => ChatMessageContent.text(_googleAIUserPrompt),
     };
   }
 
   GenerateCodeFromImageFailure _mapErrorToFailure(final Object e) {
-    if (e is OpenAIClientException) {
-      if (e.body?.toString().contains('invalid_api_key') ?? false) {
+    switch (e) {
+      // OpenAI
+      case OpenAIClientException():
+        if (e.body?.toString().contains('invalid_api_key') ?? false) {
+          return GenerateCodeFromImageFailure.invalidApiKey;
+        } else if (e.body?.toString().contains('model_not_found') ?? false) {
+          return GenerateCodeFromImageFailure.noAccessToModel;
+        }
+      // Google AI
+      case InvalidApiKey():
         return GenerateCodeFromImageFailure.invalidApiKey;
-      } else if (e.body?.toString().contains('model_not_found') ?? false) {
-        return GenerateCodeFromImageFailure.noAccessToGpt4V;
-      }
+      case ServerException():
+        if (e.message.contains('not found')) {
+          return GenerateCodeFromImageFailure.noAccessToModel;
+        }
     }
     return GenerateCodeFromImageFailure.unknown;
   }
@@ -155,7 +159,7 @@ class GenerateCodeFromImageUseCaseParams {
 
 enum GenerateCodeFromImageFailure {
   invalidApiKey,
-  noAccessToGpt4V,
+  noAccessToModel,
   unknown,
 }
 

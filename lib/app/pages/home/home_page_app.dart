@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 import 'package:syntax_highlight/syntax_highlight.dart';
 
-import '../../../core/constants.dart';
+import '../../../domain/entities/entities.dart';
 import '../../assets/assets.gen.dart';
 import '../../injection/injection.dart';
 import 'bloc/home_page_cubit.dart';
@@ -16,8 +16,7 @@ class HomePageAppSection extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return BlocBuilder<HomePageCubit, HomePageState>(
-      buildWhen: (final previous, final current) =>
-          previous.status != current.status,
+      buildWhen: (final previous, final current) => previous.status != current.status,
       builder: (final context, final state) {
         switch (state.status) {
           case HomePageStatus.loading:
@@ -219,8 +218,7 @@ class _S2AdditionalInstructions extends StatefulWidget {
   const _S2AdditionalInstructions();
 
   @override
-  State<_S2AdditionalInstructions> createState() =>
-      _S2AdditionalInstructionsState();
+  State<_S2AdditionalInstructions> createState() => _S2AdditionalInstructionsState();
 }
 
 class _S2AdditionalInstructionsState extends State<_S2AdditionalInstructions> {
@@ -306,13 +304,13 @@ class _S3ApiKeys extends StatefulWidget {
 }
 
 class _S3ApiKeysState extends State<_S3ApiKeys> {
-  late TextEditingController _openAIController;
+  late TextEditingController _providerController;
   late TextEditingController _githubController;
 
   @override
   void initState() {
     super.initState();
-    _openAIController = TextEditingController();
+    _providerController = TextEditingController();
     _githubController = TextEditingController();
   }
 
@@ -321,14 +319,14 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
     super.didChangeDependencies();
     final cubit = context.read<HomePageCubit>();
     setState(() {
-      _openAIController.text = cubit.state.openAiKey ?? '';
+      _providerController.text = cubit.state.openAiKey ?? '';
       _githubController.text = cubit.state.githubKey ?? '';
     });
   }
 
   @override
   void dispose() {
-    _openAIController.dispose();
+    _providerController.dispose();
     _githubController.dispose();
     super.dispose();
   }
@@ -345,21 +343,18 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BlocBuilder<HomePageCubit, HomePageState>(
+            buildWhen: (final previous, final current) => previous.generateCodeProvider != current.generateCodeProvider,
             builder: (final context, final state) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SegmentedButton<GenerateCodeProvider>(
-                    segments: const <ButtonSegment<GenerateCodeProvider>>[
-                      ButtonSegment<GenerateCodeProvider>(
-                        value: GenerateCodeProvider.openAI,
-                        label: Text('OpenAI'),
-                      ),
-                      ButtonSegment<GenerateCodeProvider>(
-                        value: GenerateCodeProvider.googleAI,
-                        label: Text('Gemini'),
-                      ),
-                    ],
+                  SegmentedButton(
+                    segments: GenerateCodeProvider.values.map((final provider) {
+                      return ButtonSegment(
+                        value: provider,
+                        label: Text(provider.displayName),
+                      );
+                    }).toList(growable: false),
                     selected: {state.generateCodeProvider},
                     onSelectionChanged: (final value) {
                       return cubit.onGenerateCodeProviderChanged(value.first);
@@ -373,41 +368,39 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
           BlocBuilder<HomePageCubit, HomePageState>(
             builder: (final context, final state) {
               return Text(
-                'We need your ${state.generateCodeProvider.name.toUpperCase()} API key to generate the code and your GitHub personal token to store it in a Gist. '
+                'We need your ${state.generateCodeProvider.displayName} API key to generate the code '
+                'and your GitHub personal token to store it in a Gist. '
                 'Check the FAQs below to learn how to get them.',
               );
             },
           ),
           const SizedBox(height: 24),
-          BlocBuilder<HomePageCubit, HomePageState>(
-            buildWhen: (final previous, final current) =>
-                previous.error != current.error ||
+          BlocConsumer<HomePageCubit, HomePageState>(
+            listenWhen: (final previous, final current) =>
                 previous.generateCodeProvider != current.generateCodeProvider,
+            listener: (final context, final state) {
+              final key = switch (state.generateCodeProvider) {
+                GenerateCodeProvider.openAI => state.openAiKey,
+                GenerateCodeProvider.googleAI => state.googleAiKey,
+              };
+              _providerController.text = key ?? '';
+            },
+            buildWhen: (final previous, final current) =>
+                previous.error != current.error || previous.generateCodeProvider != current.generateCodeProvider,
             builder: (final context, final state) {
               return TextField(
-                controller: _openAIController,
+                controller: _providerController,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
-                  label: Text(
-                    '${state.generateCodeProvider.name.toUpperCase()} API key',
-                  ),
-                  helperText:
-                      'Your ${state.generateCodeProvider.name.toUpperCase()} account should be at least "Usage tier 1" to use the GPT-4V(ision) model.',
+                  label: Text('${state.generateCodeProvider.displayName} API key'),
+                  helperText: state.generateCodeProvider.helperText,
                   errorText: switch (state.error) {
-                    HomePageError.invalidOpenAiApiKey =>
-                      'Invalid OpenAI API key. '
-                          'Please generate a valid key at platform.openai.com/api-keys.',
-                    HomePageError.noAccessToGpt4V =>
-                      'Your OpenAI account does not have access to the GPT-4V(ision) model. '
-                          'Please upgrade your account to "Usage tier 1" at platform.openai.com/account/billing '
-                          '(check the FAQs below for more info).',
+                    HomePageError.invalidAPiKey => state.generateCodeProvider.invalidApiKeyText,
+                    HomePageError.noAccessToModel => state.generateCodeProvider.noAccessToModelText,
                     _ => null,
                   },
                 ),
-                onChanged:
-                    (state.generateCodeProvider == GenerateCodeProvider.openAI)
-                        ? cubit.onOpenAiKeyChanged
-                        : cubit.onGeminiKeyChanged,
+                onChanged: cubit.onProviderApiKeyChanged,
                 keyboardType: TextInputType.text,
                 obscureText: true,
               );
@@ -419,8 +412,7 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
               label: Text('GitHub personal token'),
-              helperText:
-                  'Only Gists read/write permission is required (used to load the code into DartPad).',
+              helperText: 'Only Gists read/write permission is required (used to load the code into DartPad).',
             ),
             onChanged: cubit.onGithubKeyChanged,
             keyboardType: TextInputType.text,
@@ -428,8 +420,7 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
           ),
           const SizedBox(height: 8),
           BlocBuilder<HomePageCubit, HomePageState>(
-            buildWhen: (final previous, final current) =>
-                previous.storeApiKeys != current.storeApiKeys,
+            buildWhen: (final previous, final current) => previous.storeApiKeys != current.storeApiKeys,
             builder: (final context, final state) {
               return CheckboxListTile(
                 title: Text(
@@ -445,14 +436,13 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
               );
             },
           ),
-          const GenerateImagesCheckbox(),
+          const _GenerateImagesCheckbox(),
           const SizedBox(height: 16),
           Center(
             child: BlocBuilder<HomePageCubit, HomePageState>(
               builder: (final context, final state) {
                 final canSubmit = (state.openAiKey?.isNotEmpty ?? false) ||
-                    (state.geminiKey?.isNotEmpty ?? false) &&
-                        (state.githubKey?.isNotEmpty ?? false);
+                    (state.googleAiKey?.isNotEmpty ?? false) && (state.githubKey?.isNotEmpty ?? false);
                 return FilledButton(
                   onPressed: canSubmit ? cubit.onApiKeysSubmitted : null,
                   child: const Text('Generate code'),
@@ -466,44 +456,46 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
   }
 }
 
-class GenerateImagesCheckbox extends StatelessWidget {
-  const GenerateImagesCheckbox({
-    super.key,
-  });
+class _GenerateImagesCheckbox extends StatelessWidget {
+  const _GenerateImagesCheckbox();
 
   @override
   Widget build(final BuildContext context) {
     final cubit = context.read<HomePageCubit>();
     final theme = Theme.of(context);
     return BlocBuilder<HomePageCubit, HomePageState>(
+      buildWhen: (final previous, final current) =>
+          previous.generateImages != current.generateImages ||
+          previous.generateCodeProvider != current.generateCodeProvider,
       builder: (final context, final state) {
-        return (state.generateCodeProvider == GenerateCodeProvider.openAI)
-            ? CheckboxListTile(
-                title: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Generate images using OpenAI DALL·E',
-                      style: theme.textTheme.bodyMedium,
-                    ),
-                    const SizedBox(width: 8),
-                    const Tooltip(
-                      message:
-                          'Enable this option if you want to replicate the images '
-                          'in the screenshot using OpenAI DALL·E image generator.\n'
-                          'Mind that this will increase the generation time and cost.',
-                      child: Icon(Icons.info_outline, size: 16),
-                    ),
-                  ],
-                ),
-                value: state.generateImages,
-                onChanged: (final value) {
-                  return cubit.onGenerateImagesChanged(
-                    generateImages: value ?? false,
-                  );
-                },
-              )
-            : const SizedBox.shrink();
+        if (state.generateCodeProvider != GenerateCodeProvider.openAI) {
+          return const SizedBox.shrink();
+        }
+
+        return CheckboxListTile(
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Generate images using OpenAI DALL·E',
+                style: theme.textTheme.bodyMedium,
+              ),
+              const SizedBox(width: 8),
+              const Tooltip(
+                message: 'Enable this option if you want to replicate the images '
+                    'in the screenshot using OpenAI DALL·E image generator.\n'
+                    'Mind that this will increase the generation time and cost.',
+                child: Icon(Icons.info_outline, size: 16),
+              ),
+            ],
+          ),
+          value: state.generateImages,
+          onChanged: (final value) {
+            return cubit.onGenerateImagesChanged(
+              generateImages: value ?? false,
+            );
+          },
+        );
       },
     );
   }
@@ -525,8 +517,7 @@ class _S4Generating extends StatelessWidget {
         child: SingleChildScrollView(
           reverse: true,
           child: BlocBuilder<HomePageCubit, HomePageState>(
-            buildWhen: (final previous, final current) =>
-                previous.generatedCode != current.generatedCode,
+            buildWhen: (final previous, final current) => previous.generatedCode != current.generatedCode,
             builder: (final context, final state) {
               return Text.rich(
                 highlighter.highlight(state.generatedCode ?? ''),

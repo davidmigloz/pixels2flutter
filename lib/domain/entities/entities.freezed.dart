@@ -19,7 +19,9 @@ mixin _$Screenshot {
   String get mimeType => throw _privateConstructorUsedError;
   Uint8List get data => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Screenshot
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ScreenshotCopyWith<Screenshot> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -43,6 +45,8 @@ class _$ScreenshotCopyWithImpl<$Res, $Val extends Screenshot>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Screenshot
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -81,6 +85,8 @@ class __$$ScreenshotImplCopyWithImpl<$Res>
       _$ScreenshotImpl _value, $Res Function(_$ScreenshotImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Screenshot
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -138,7 +144,9 @@ class _$ScreenshotImpl with DiagnosticableTreeMixin implements _Screenshot {
   int get hashCode => Object.hash(
       runtimeType, mimeType, const DeepCollectionEquality().hash(data));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Screenshot
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ScreenshotImplCopyWith<_$ScreenshotImpl> get copyWith =>
@@ -154,8 +162,11 @@ abstract class _Screenshot implements Screenshot {
   String get mimeType;
   @override
   Uint8List get data;
+
+  /// Create a copy of Screenshot
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ScreenshotImplCopyWith<_$ScreenshotImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

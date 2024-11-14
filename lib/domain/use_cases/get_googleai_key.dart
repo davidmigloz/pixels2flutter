@@ -5,8 +5,8 @@ import '../../data/dart.dart';
 import 'use_case.dart';
 
 @injectable
-class GetGeminiKeyUseCase implements AsyncUseCase<Unit, String, Exception> {
-  const GetGeminiKeyUseCase(
+class GetGoogleAiKeyUseCase implements AsyncUseCase<Unit, String, Exception> {
+  const GetGoogleAiKeyUseCase(
     this._settingsRepository,
   );
 
@@ -17,7 +17,7 @@ class GetGeminiKeyUseCase implements AsyncUseCase<Unit, String, Exception> {
     final Unit params = unit,
   }) async {
     try {
-      final key = await _settingsRepository.getGeminiKey();
+      final key = await _settingsRepository.getGoogleAiKey();
       return Result.success(key ?? '');
     } on Exception catch (e) {
       return Result.failure(e);

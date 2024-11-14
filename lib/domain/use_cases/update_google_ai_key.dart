@@ -6,9 +6,8 @@ import '../../data/dart.dart';
 import 'use_case.dart';
 
 @injectable
-class UpdateGeminiKeyUseCase
-    implements AsyncUseCase<UpdateGeminiKeyUseCaseParams, Unit, Exception> {
-  const UpdateGeminiKeyUseCase(
+class UpdateGoogleAiKeyUseCase implements AsyncUseCase<UpdateGoogleAiKeyUseCaseParams, Unit, Exception> {
+  const UpdateGoogleAiKeyUseCase(
     this._chatGoogleGenerativeAI,
     this._settingsRepository,
   );
@@ -18,12 +17,12 @@ class UpdateGeminiKeyUseCase
 
   @override
   Future<Result<Unit, Exception>> call({
-    required final UpdateGeminiKeyUseCaseParams params,
+    required final UpdateGoogleAiKeyUseCaseParams params,
   }) async {
     try {
       _chatGoogleGenerativeAI.apiKey = params.key;
       if (params.storeApiKeys) {
-        await _settingsRepository.saveGeminiKey(params.key);
+        await _settingsRepository.saveGoogleAiKey(params.key);
       }
       return const Result.success(unit);
     } on Exception catch (e) {
@@ -32,8 +31,8 @@ class UpdateGeminiKeyUseCase
   }
 }
 
-class UpdateGeminiKeyUseCaseParams {
-  const UpdateGeminiKeyUseCaseParams({
+class UpdateGoogleAiKeyUseCaseParams {
+  const UpdateGoogleAiKeyUseCaseParams({
     required this.key,
     required this.storeApiKeys,
   });
