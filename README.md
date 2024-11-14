@@ -22,8 +22,8 @@ For example, how the UI should behave when the user interacts with it.
 
 **3. Code generation**
 
-The app leverages the power of OpenAI GPT-4o multimodal LLM to transform
-your screenshot and instructions into Flutter code.
+The app leverages the power of multimodal LLMs (OpenAI GPT-4o or Google Gemini 1.5 Pro)
+to transform your screenshot and instructions into Flutter code.
 
 **4. Run the code**
 

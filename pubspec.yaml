@@ -4,8 +4,8 @@ version: 1.0.0+1
 publish_to: 'none'
 
 environment:
-  sdk: 3.4.4
-  flutter: 3.22.3
+  sdk: 3.5.4
+  flutter: 3.24.4
 
 dependencies:
   flutter:
@@ -14,30 +14,31 @@ dependencies:
     sdk: flutter
   dotted_border: 2.1.0
   equatable: 2.0.5
-  file_picker: 8.0.6
+  file_picker: 8.1.4
   flutter_animate: 4.5.0
   flutter_bloc: 8.1.6
+  flutter_markdown: 0.7.4+1
   flutter_secure_storage: 9.2.2
-  flutter_svg: 2.0.10+1
+  flutter_svg: 2.0.14
   freezed_annotation: 2.4.4
-  get_it: 7.7.0
+  get_it: 8.0.2
   github: 9.24.0
-  go_router: 14.2.3
-  injectable: 2.4.4
-  langchain: 0.7.4
-  langchain_openai: 0.7.0
-  flutter_markdown: 0.7.3
+  go_router: 14.6.0
+  injectable: 2.5.0
+  langchain: 0.7.7+1
+  langchain_google: 0.6.4+1
+  langchain_openai: 0.7.2+5
   result_dart: 1.1.1
-  super_drag_and_drop: 0.8.18
+  super_drag_and_drop: 0.8.24
   syntax_highlight: 0.4.0
-  url_launcher: 6.3.0
+  url_launcher: 6.3.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: 2.4.11
-  flutter_gen_runner: 5.6.0
-  freezed: 2.5.2
+  build_runner: 2.4.13
+  flutter_gen_runner: 5.8.0
+  freezed: 2.5.7
   injectable_generator: 2.6.2
 
 flutter:

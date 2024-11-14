@@ -9,10 +9,12 @@ class HomePageState extends Equatable {
     this.generateImages = false,
     this.storeApiKeys = false,
     this.openAiKey,
+    this.googleAiKey,
     this.githubKey,
     this.generatedCode,
     this.error,
     this.selectedExample = 0,
+    this.generateCodeProvider = GenerateCodeProvider.openAI,
   });
 
   final HomePageStatus status;
@@ -21,10 +23,12 @@ class HomePageState extends Equatable {
   final bool generateImages;
   final bool storeApiKeys;
   final String? openAiKey;
+  final String? googleAiKey;
   final String? githubKey;
   final String? generatedCode;
   final HomePageError? error;
   final int selectedExample;
+  final GenerateCodeProvider generateCodeProvider;
 
   HomePageState copyWith({
     final HomePageStatus? status,
@@ -33,10 +37,12 @@ class HomePageState extends Equatable {
     final bool? generateImages,
     final bool? storeApiKeys,
     final String? openAiKey,
+    final String? googleAiKey,
     final String? githubKey,
     final String? generatedCode,
     final HomePageError? error,
     final int? selectedExample,
+    final GenerateCodeProvider? generateCodeProvider,
   }) {
     return HomePageState(
       status: status ?? this.status,
@@ -45,10 +51,12 @@ class HomePageState extends Equatable {
       generateImages: generateImages ?? this.generateImages,
       storeApiKeys: storeApiKeys ?? this.storeApiKeys,
       openAiKey: openAiKey ?? this.openAiKey,
+      googleAiKey: googleAiKey ?? this.googleAiKey,
       githubKey: githubKey ?? this.githubKey,
       generatedCode: generatedCode ?? this.generatedCode,
       error: error,
       selectedExample: selectedExample ?? this.selectedExample,
+      generateCodeProvider: generateCodeProvider ?? this.generateCodeProvider,
     );
   }
 
@@ -57,6 +65,7 @@ class HomePageState extends Equatable {
       status: HomePageStatus.s1SelectImage,
       storeApiKeys: storeApiKeys,
       openAiKey: openAiKey,
+      googleAiKey: googleAiKey,
       githubKey: githubKey,
       selectedExample: selectedExample,
     );
@@ -70,10 +79,12 @@ class HomePageState extends Equatable {
         generateImages,
         storeApiKeys,
         openAiKey,
+        googleAiKey,
         githubKey,
         generatedCode,
         error,
         selectedExample,
+        generateCodeProvider,
       ];
 }
 
@@ -86,7 +97,7 @@ enum HomePageStatus {
 }
 
 enum HomePageError {
-  invalidOpenAiApiKey,
-  noAccessToGpt4V,
+  invalidAPiKey,
+  noAccessToModel,
   unknown,
 }

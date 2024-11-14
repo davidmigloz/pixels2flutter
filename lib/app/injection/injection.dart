@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:github/github.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:langchain_google/langchain_google.dart';
 import 'package:langchain_openai/langchain_openai.dart';
 import 'package:syntax_highlight/syntax_highlight.dart';
 import '../navigation/router.dart';
@@ -30,6 +31,9 @@ abstract class InjectionModule {
 
   @singleton
   ChatOpenAI get chatOpenAI => ChatOpenAI();
+
+  @singleton
+  ChatGoogleGenerativeAI get chatGoogleGenerativeAI => ChatGoogleGenerativeAI();
 
   @singleton
   OpenAIDallETool get dallETool => OpenAIDallETool();

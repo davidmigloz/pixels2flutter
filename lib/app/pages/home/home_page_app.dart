@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 import 'package:syntax_highlight/syntax_highlight.dart';
 
+import '../../../domain/entities/entities.dart';
 import '../../assets/assets.gen.dart';
 import '../../injection/injection.dart';
 import 'bloc/home_page_cubit.dart';
@@ -246,7 +247,6 @@ class _S2AdditionalInstructionsState extends State<_S2AdditionalInstructions> {
 
   @override
   Widget build(final BuildContext context) {
-    final theme = Theme.of(context);
     final cubit = context.read<HomePageCubit>();
     final imageBytes = cubit.state.screenshot!.data;
     return _AppCardBody(
@@ -280,37 +280,6 @@ class _S2AdditionalInstructionsState extends State<_S2AdditionalInstructions> {
                       minLines: 6,
                       maxLines: 6,
                     ),
-                    const SizedBox(height: 8),
-                    BlocBuilder<HomePageCubit, HomePageState>(
-                      buildWhen: (final previous, final current) => previous.generateImages != current.generateImages,
-                      builder: (final context, final state) {
-                        return CheckboxListTile(
-                          title: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'Generate images using OpenAI DALL·E',
-                                style: theme.textTheme.bodyMedium,
-                              ),
-                              const SizedBox(width: 8),
-                              const Tooltip(
-                                message: 'Enable this option if you want to replicate the images '
-                                    'in the screenshot using OpenAI DALL·E image generator.\n'
-                                    'Mind that this will increase the generation time and cost.',
-                                child: Icon(Icons.info_outline, size: 16),
-                              ),
-                            ],
-                          ),
-                          value: state.generateImages,
-                          onChanged: (final value) {
-                            return cubit.onGenerateImagesChanged(
-                              generateImages: value ?? false,
-                            );
-                          },
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 8),
                   ],
                 ),
               ),
@@ -335,13 +304,13 @@ class _S3ApiKeys extends StatefulWidget {
 }
 
 class _S3ApiKeysState extends State<_S3ApiKeys> {
-  late TextEditingController _openAIController;
+  late TextEditingController _providerController;
   late TextEditingController _githubController;
 
   @override
   void initState() {
     super.initState();
-    _openAIController = TextEditingController();
+    _providerController = TextEditingController();
     _githubController = TextEditingController();
   }
 
@@ -350,14 +319,14 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
     super.didChangeDependencies();
     final cubit = context.read<HomePageCubit>();
     setState(() {
-      _openAIController.text = cubit.state.openAiKey ?? '';
+      _providerController.text = cubit.state.openAiKey ?? '';
       _githubController.text = cubit.state.githubKey ?? '';
     });
   }
 
   @override
   void dispose() {
-    _openAIController.dispose();
+    _providerController.dispose();
     _githubController.dispose();
     super.dispose();
   }
@@ -373,30 +342,65 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'We need your OpenAI API key to generate the code and your GitHub personal token to store it in a Gist. '
-            'Check the FAQs below to learn how to get them.',
+          BlocBuilder<HomePageCubit, HomePageState>(
+            buildWhen: (final previous, final current) => previous.generateCodeProvider != current.generateCodeProvider,
+            builder: (final context, final state) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SegmentedButton(
+                    segments: GenerateCodeProvider.values.map((final provider) {
+                      return ButtonSegment(
+                        value: provider,
+                        label: Text(provider.displayName),
+                      );
+                    }).toList(growable: false),
+                    selected: {state.generateCodeProvider},
+                    onSelectionChanged: (final value) {
+                      return cubit.onGenerateCodeProviderChanged(value.first);
+                    },
+                  ),
+                ],
+              );
+            },
           ),
           const SizedBox(height: 24),
           BlocBuilder<HomePageCubit, HomePageState>(
-            buildWhen: (final previous, final current) => previous.error != current.error,
+            builder: (final context, final state) {
+              return Text(
+                'We need your ${state.generateCodeProvider.displayName} API key to generate the code '
+                'and your GitHub personal token to store it in a Gist. '
+                'Check the FAQs below to learn how to get them.',
+              );
+            },
+          ),
+          const SizedBox(height: 24),
+          BlocConsumer<HomePageCubit, HomePageState>(
+            listenWhen: (final previous, final current) =>
+                previous.generateCodeProvider != current.generateCodeProvider,
+            listener: (final context, final state) {
+              final key = switch (state.generateCodeProvider) {
+                GenerateCodeProvider.openAI => state.openAiKey,
+                GenerateCodeProvider.googleAI => state.googleAiKey,
+              };
+              _providerController.text = key ?? '';
+            },
+            buildWhen: (final previous, final current) =>
+                previous.error != current.error || previous.generateCodeProvider != current.generateCodeProvider,
             builder: (final context, final state) {
               return TextField(
-                controller: _openAIController,
+                controller: _providerController,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
-                  label: const Text('OpenAI API key'),
-                  helperText: 'Your OpenAI account should be at least "Usage tier 1" to use the GPT-4o model.',
+                  label: Text('${state.generateCodeProvider.displayName} API key'),
+                  helperText: state.generateCodeProvider.helperText,
                   errorText: switch (state.error) {
-                    HomePageError.invalidOpenAiApiKey => 'Invalid OpenAI API key. '
-                        'Please generate a valid key at platform.openai.com/api-keys.',
-                    HomePageError.noAccessToGpt4V => 'Your OpenAI account does not have access to the GPT-4o model. '
-                        'Please upgrade your account to "Usage tier 1" at platform.openai.com/account/billing '
-                        '(check the FAQs below for more info).',
+                    HomePageError.invalidAPiKey => state.generateCodeProvider.invalidApiKeyText,
+                    HomePageError.noAccessToModel => state.generateCodeProvider.noAccessToModelText,
                     _ => null,
                   },
                 ),
-                onChanged: cubit.onOpenAiKeyChanged,
+                onChanged: cubit.onProviderApiKeyChanged,
                 keyboardType: TextInputType.text,
                 obscureText: true,
               );
@@ -432,11 +436,13 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
               );
             },
           ),
+          const _GenerateImagesCheckbox(),
           const SizedBox(height: 16),
           Center(
             child: BlocBuilder<HomePageCubit, HomePageState>(
               builder: (final context, final state) {
-                final canSubmit = (state.openAiKey?.isNotEmpty ?? false) && (state.githubKey?.isNotEmpty ?? false);
+                final canSubmit = (state.openAiKey?.isNotEmpty ?? false) ||
+                    (state.googleAiKey?.isNotEmpty ?? false) && (state.githubKey?.isNotEmpty ?? false);
                 return FilledButton(
                   onPressed: canSubmit ? cubit.onApiKeysSubmitted : null,
                   child: const Text('Generate code'),
@@ -446,6 +452,51 @@ class _S3ApiKeysState extends State<_S3ApiKeys> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _GenerateImagesCheckbox extends StatelessWidget {
+  const _GenerateImagesCheckbox();
+
+  @override
+  Widget build(final BuildContext context) {
+    final cubit = context.read<HomePageCubit>();
+    final theme = Theme.of(context);
+    return BlocBuilder<HomePageCubit, HomePageState>(
+      buildWhen: (final previous, final current) =>
+          previous.generateImages != current.generateImages ||
+          previous.generateCodeProvider != current.generateCodeProvider,
+      builder: (final context, final state) {
+        if (state.generateCodeProvider != GenerateCodeProvider.openAI) {
+          return const SizedBox.shrink();
+        }
+
+        return CheckboxListTile(
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Generate images using OpenAI DALL·E',
+                style: theme.textTheme.bodyMedium,
+              ),
+              const SizedBox(width: 8),
+              const Tooltip(
+                message: 'Enable this option if you want to replicate the images '
+                    'in the screenshot using OpenAI DALL·E image generator.\n'
+                    'Mind that this will increase the generation time and cost.',
+                child: Icon(Icons.info_outline, size: 16),
+              ),
+            ],
+          ),
+          value: state.generateImages,
+          onChanged: (final value) {
+            return cubit.onGenerateImagesChanged(
+              generateImages: value ?? false,
+            );
+          },
+        );
+      },
     );
   }
 }

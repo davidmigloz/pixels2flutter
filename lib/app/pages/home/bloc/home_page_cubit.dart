@@ -10,6 +10,7 @@ import 'package:super_drag_and_drop/super_drag_and_drop.dart';
 
 import '../../../../domain/domain.dart';
 import '../../../../domain/entities/entities.dart';
+import '../../../../domain/use_cases/use_cases.dart';
 import '../../../navigation/navigation_urls.dart';
 
 part 'home_page_state.dart';
@@ -19,8 +20,10 @@ class HomePageCubit extends Cubit<HomePageState> {
   HomePageCubit(
     this._filePicker,
     this._getOpenAiKeyUseCase,
+    this._getGoogleAiKeyUseCase,
     this._getGitHubKeyUseCase,
     this._updateOpenAiKeyUseCase,
+    this._updateGoogleAiKeyUseCase,
     this._updateGitHubKeyUseCase,
     this._generateCodeFromImageUseCase,
     this._replaceImagePlaceholdersUseCase,
@@ -32,8 +35,10 @@ class HomePageCubit extends Cubit<HomePageState> {
 
   final FilePicker _filePicker;
   final GetOpenAiKeyUseCase _getOpenAiKeyUseCase;
+  final GetGoogleAiKeyUseCase _getGoogleAiKeyUseCase;
   final GetGitHubKeyUseCase _getGitHubKeyUseCase;
   final UpdateOpenAiKeyUseCase _updateOpenAiKeyUseCase;
+  final UpdateGoogleAiKeyUseCase _updateGoogleAiKeyUseCase;
   final UpdateGitHubKeyUseCase _updateGitHubKeyUseCase;
   final GenerateCodeFromImageUseCase _generateCodeFromImageUseCase;
   final ReplaceImagePlaceholdersUseCase _replaceImagePlaceholdersUseCase;
@@ -47,13 +52,21 @@ class HomePageCubit extends Cubit<HomePageState> {
       return;
     }
     final openAiKey = (await _getOpenAiKeyUseCase()).getOrNull();
+    final googleAiKey = (await _getGoogleAiKeyUseCase()).getOrNull();
     final githubKey = (await _getGitHubKeyUseCase()).getOrNull();
+
     emit(
       state.copyWith(
         status: HomePageStatus.s1SelectImage,
         openAiKey: openAiKey,
+        googleAiKey: googleAiKey,
         githubKey: githubKey,
         storeApiKeys: openAiKey?.isNotEmpty,
+        generateCodeProvider: (openAiKey?.isNotEmpty ?? false)
+            ? GenerateCodeProvider.openAI
+            : (googleAiKey?.isNotEmpty ?? false)
+                ? GenerateCodeProvider.googleAI
+                : GenerateCodeProvider.openAI,
       ),
     );
   }
@@ -135,8 +148,12 @@ class HomePageCubit extends Cubit<HomePageState> {
     emit(state.copyWith(status: HomePageStatus.s3ApiKeys));
   }
 
-  void onOpenAiKeyChanged(final String openAiKey) {
-    emit(state.copyWith(openAiKey: openAiKey));
+  void onProviderApiKeyChanged(final String apiKey) {
+    emit(
+      state.generateCodeProvider == GenerateCodeProvider.openAI
+          ? state.copyWith(openAiKey: apiKey)
+          : state.copyWith(googleAiKey: apiKey),
+    );
   }
 
   void onGithubKeyChanged(final String githubKey) {
@@ -147,17 +164,28 @@ class HomePageCubit extends Cubit<HomePageState> {
     emit(state.copyWith(storeApiKeys: storeApiKeys));
   }
 
+  void onGenerateCodeProviderChanged(final GenerateCodeProvider provider) {
+    emit(state.copyWith(generateCodeProvider: provider));
+  }
+
   Future<void> onApiKeysSubmitted() async {
     final openAiKey = state.openAiKey;
+    final googleAiKey = state.googleAiKey;
     final githubKey = state.githubKey;
     final storeApiKeys = state.storeApiKeys;
-    if (openAiKey == null || githubKey == null) {
+    if (openAiKey == null || googleAiKey == null || githubKey == null) {
       return;
     }
 
     await _updateOpenAiKeyUseCase(
       params: UpdateOpenAIKeyUseCaseParams(
         key: openAiKey,
+        storeApiKeys: storeApiKeys,
+      ),
+    );
+    await _updateGoogleAiKeyUseCase(
+      params: UpdateGoogleAiKeyUseCaseParams(
+        key: googleAiKey,
         storeApiKeys: storeApiKeys,
       ),
     );
@@ -174,6 +202,7 @@ class HomePageCubit extends Cubit<HomePageState> {
   Future<void> _generateCode() async {
     final stream = _generateCodeFromImageUseCase(
       params: GenerateCodeFromImageUseCaseParams(
+        provider: state.generateCodeProvider,
         screenshot: state.screenshot!,
         additionalInstructions:
             (state.additionalInstructions?.isNotEmpty ?? false) ? state.additionalInstructions : null,
@@ -187,7 +216,12 @@ class HomePageCubit extends Cubit<HomePageState> {
           _onGenerateCodeFailure,
         );
       },
-      onDone: () => _onGenerateCodeCompleted(state.generatedCode!),
+      cancelOnError: true,
+      onDone: () {
+        if (state.generatedCode != null) {
+          _onGenerateCodeCompleted(state.generatedCode!);
+        }
+      },
     );
   }
 
@@ -199,14 +233,31 @@ class HomePageCubit extends Cubit<HomePageState> {
     );
   }
 
-  Future<void> _onGenerateCodeFailure(final GenerateCodeFromImageFailure failure) async {
+  Future<void> _onGenerateCodeFailure(
+    final GenerateCodeFromImageFailure failure,
+  ) async {
     switch (failure) {
       case GenerateCodeFromImageFailure.invalidApiKey:
-        emit(state.copyWith(status: HomePageStatus.s3ApiKeys, error: HomePageError.invalidOpenAiApiKey));
-      case GenerateCodeFromImageFailure.noAccessToGpt4V:
-        emit(state.copyWith(status: HomePageStatus.s3ApiKeys, error: HomePageError.noAccessToGpt4V));
+        emit(
+          state.copyWith(
+            status: HomePageStatus.s3ApiKeys,
+            error: HomePageError.invalidAPiKey,
+          ),
+        );
+      case GenerateCodeFromImageFailure.noAccessToModel:
+        emit(
+          state.copyWith(
+            status: HomePageStatus.s3ApiKeys,
+            error: HomePageError.noAccessToModel,
+          ),
+        );
       case GenerateCodeFromImageFailure.unknown:
-        emit(state.reset().copyWith(status: HomePageStatus.s1SelectImage, error: HomePageError.unknown));
+        emit(
+          state.reset().copyWith(
+                status: HomePageStatus.s1SelectImage,
+                error: HomePageError.unknown,
+              ),
+        );
     }
   }
 
@@ -243,7 +294,12 @@ class HomePageCubit extends Cubit<HomePageState> {
   }
 
   Future<void> _onErrorCreatingGist(final Exception e) async {
-    emit(state.reset().copyWith(status: HomePageStatus.s1SelectImage, error: HomePageError.unknown));
+    emit(
+      state.reset().copyWith(
+            status: HomePageStatus.s1SelectImage,
+            error: HomePageError.unknown,
+          ),
+    );
   }
 
   void onExampleSelected(final int example) {
