@@ -13,7 +13,7 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   dotted_border: 2.1.0
-  equatable: 2.0.5
+  equatable: 2.0.7
   file_picker: 8.1.4
   flutter_animate: 4.5.0
   flutter_bloc: 8.1.6
