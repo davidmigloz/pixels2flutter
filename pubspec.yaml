@@ -13,17 +13,17 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   dotted_border: 2.1.0
-  equatable: 2.0.5
+  equatable: 2.0.7
   file_picker: 8.1.4
-  flutter_animate: 4.5.0
+  flutter_animate: 4.5.2
   flutter_bloc: 8.1.6
-  flutter_markdown: 0.7.4+1
+  flutter_markdown: 0.7.4+3
   flutter_secure_storage: 9.2.2
-  flutter_svg: 2.0.14
+  flutter_svg: 2.0.16
   freezed_annotation: 2.4.4
   get_it: 8.0.2
   github: 9.24.0
-  go_router: 14.6.0
+  go_router: 14.6.2
   injectable: 2.5.0
   langchain: 0.7.7+1
   langchain_google: 0.6.4+1
