@@ -633,34 +633,34 @@ packages:
     dependency: "direct main"
     description:
       name: langchain
-      sha256: e04fa5e2edf15effcce77c5c6731cb1006bf7eafca5440e771fc264e8eb18991
+      sha256: "5ed0d1718108f78657f6e83dc7ce383f054a9ad46c7230957d82600ca677deaa"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.7+1"
+    version: "0.7.7+2"
   langchain_core:
     dependency: transitive
     description:
       name: langchain_core
-      sha256: "59dbf5323e1a5f17b3f36f48657a05fb9151db51bee7118ea3a8375dfa49c600"
+      sha256: "89ae8945acfc21434e6374324a4592e7cfe49a3af28a6d9780f8c9cf5028fe31"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.6"
+    version: "0.3.6+1"
   langchain_google:
     dependency: "direct main"
     description:
       name: langchain_google
-      sha256: "1aefd201261b07f0f8d1e6162ae49eeaa3b0365a69a77a6fd5444ec51cd097cb"
+      sha256: "433a4c74feacc228f01ea46bb96092eaa3e46c558c2455d3a5dd79d85af4748f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.4+1"
+    version: "0.6.4+2"
   langchain_openai:
     dependency: "direct main"
     description:
       name: langchain_openai
-      sha256: f9cb5aec06b8f0d919380e027aa6cb53a75f3b31972448c891a4e619b0750967
+      sha256: b8d1b5797c9ac003d0a6e68149cfe5df8a239c3fc079b81b5dc0c03a2fd37723
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.2+5"
+    version: "0.7.3"
   langchain_tiktoken:
     dependency: transitive
     description:
@@ -761,10 +761,10 @@ packages:
     dependency: transitive
     description:
       name: openai_dart
-      sha256: c256fdb0cc7af42ecdd49965ab390c2947a3ab3eadc46b66ffa3634759b6be0a
+      sha256: "1cc5ed0915fa7572b943de01cfa7a3e5cfe1e6a7f4d0d9a9374d046518e84575"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.4"
+    version: "0.4.5"
   package_config:
     dependency: transitive
     description:
@@ -1198,10 +1198,10 @@ packages:
     dependency: transitive
     description:
       name: vertex_ai
-      sha256: b372c6dddb027d5cb12a50731455701f7a50021f3b43d41de92e1839922c9450
+      sha256: "8bdbc23b8cccd80d17d79a190cd4a060f844668c72969c2ff1ff1413943e9de1"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0+2"
+    version: "0.1.0+3"
   vm_service:
     dependency: transitive
     description:
