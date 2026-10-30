@@ -33,6 +33,7 @@ jobs:
         uses: subosito/flutter-action@74af56c5ed2697ba4621264652728e8d217e53d3
         with:
           channel: 'stable'
+          flutter-version: '3.24.4'
 
       - name: Set-up Flutter
         run: |
@@ -47,7 +48,9 @@ jobs:
         run: flutter pub get
 
       - name: Build
-        run: flutter build web --release --web-renderer=canvaskit
+        run: |
+          flutter build web --release --web-renderer=canvaskit --base-href /pixels2flutter/
+          cp build/web/index.html build/web/404.html
 
       - name: Setup Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b

@@ -20,7 +20,7 @@ class CreateGistUseCase implements AsyncUseCase<CreateGistUseCaseParams, String,
 
       final res = await _github.gists.createGist(
         {'main.dart': cleanedCode},
-        description: 'Generated code from pixels2flutter.dev',
+        description: 'Generated code from pixels2flutter (https://davidmigloz.github.io/pixels2flutter/)',
         public: true,
       );
       return Result.success(res.id!);

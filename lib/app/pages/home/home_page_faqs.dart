@@ -7,16 +7,16 @@ class HomePageFAQsSection extends StatelessWidget {
 
   static const _faqs = [
     _FAQsItem(
-      title: 'Is pixels2flutter.dev free?',
-      content: 'Yes! [pixels2flutter.dev](https://pixels2flutter.dev) app is totally free.  \n'
+      title: 'Is pixels2flutter free?',
+      content: 'Yes! [pixels2flutter](https://davidmigloz.github.io/pixels2flutter/) app is totally free.  \n'
           'But you need to provide your own model provider key (OpenAI, Google AI, etc.) to generate the code.  \n'
           r'The cost of each generation depends on the provider you use and the length of the code. '
           r'On average it costs around $0.01 when using OpenAI. '
           r'Google AI has a generous free tier that you can take advantage of.',
     ),
     _FAQsItem(
-      title: 'Is pixels2flutter.dev open-source?',
-      content: 'Yes! [pixels2flutter.dev](https://pixels2flutter.dev) app is fully open-source. '
+      title: 'Is pixels2flutter open-source?',
+      content: 'Yes! [pixels2flutter](https://davidmigloz.github.io/pixels2flutter/) app is fully open-source. '
           'It is built using Flutter web and [LangChain.dart](https://github.com/davidmigloz/langchain_dart).  \n'
           'You can find the code [here](https://github.com/davidmigloz/pixels2flutter). '
           "Don't forget to drop a star if you like it!",
@@ -61,13 +61,13 @@ class HomePageFAQsSection extends StatelessWidget {
     _FAQsItem(
       title: "Isn't it risky to provide my API keys?",
       content:
-          'Yes, it is. But that is the only way we can offer [pixels2flutter.dev](https://pixels2flutter.dev) app for free. '
+          'Yes, it is. But that is the only way we can offer [pixels2flutter](https://davidmigloz.github.io/pixels2flutter/) app for free. '
           'That is also why it is open-source. You can check the code and run it locally if you want to be 100% sure '
           'that your API keys are not being misused.',
     ),
     _FAQsItem(
       title: 'Can I use an open-source alternative to OpenAI or Google AI?',
-      content: r'At the moment, [pixels2flutter.dev](https://pixels2flutter.dev) only supports '
+      content: r'At the moment, [pixels2flutter](https://davidmigloz.github.io/pixels2flutter/) only supports '
           r'[OpenAI GPT-4o](https://openai.com/index/hello-gpt-4o) and [Google Gemini 1.5 Pro](https://deepmind.google/technologies/gemini/pro) models. '
           r'But as soon as there is an open-source alternative that produces similar results '
           r'we will add support for it.',

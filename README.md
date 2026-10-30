@@ -1,4 +1,4 @@
-# [pixels2flutter.dev](https://pixels2flutter.dev) 🦋
+# [pixels2flutter](https://davidmigloz.github.io/pixels2flutter/) 🦋
 
 [![tests](https://img.shields.io/github/actions/workflow/status/davidmigloz/pixels2flutter/deploy.yaml?logo=github&label=deploy)](https://github.com/davidmigloz/pixels2flutter/actions/workflows/deploy.yaml)
 [![](https://dcbadge.vercel.app/api/server/x4qbhqecVR?style=flat)](https://discord.gg/x4qbhqecVR)
@@ -65,4 +65,4 @@ This project is inspired by:
 
 ## License
 
-pixels2flutter.dev is licensed under the [AGPL-3.0 license](https://github.com/davidmigloz/pixels2flutter/blob/main/LICENSE).
+pixels2flutter is licensed under the [AGPL-3.0 license](https://github.com/davidmigloz/pixels2flutter/blob/main/LICENSE).
