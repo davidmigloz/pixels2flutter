@@ -921,10 +921,10 @@ packages:
     dependency: "direct main"
     description:
       name: result_dart
-      sha256: "3c69c864a08df0f413a86be211d07405e9a53cc1ac111e3cc8365845a0fb5288"
+      sha256: "80096f0928e276c024e53cf1bb2aaffd5a94623dac8fdfa5cb3529e82b51eb3c"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.1"
+    version: "2.2.0"
   retry:
     dependency: transitive
     description:
