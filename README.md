@@ -7,7 +7,7 @@
 Convert a screenshot to Flutter code!
 
 > [!NOTE]
-> pixels2flutter was a proof of concept. I started it in November 2023, shortly after OpenAI released GPT-4 with vision in its API. As far as I know, it was the first screenshot-to-code tool for Flutter. The project is no longer maintained.
+> pixels2flutter was a proof of concept. I started it in November 2023, shortly after OpenAI released GPT-4 with vision in its API. As far as I know, it was the first screenshot-to-code tool for Flutter. The project is no longer maintained, because today any coding agent can turn a screenshot into Flutter code.
 
 ## How does it work
 
